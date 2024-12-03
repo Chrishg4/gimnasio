@@ -230,25 +230,48 @@ CustomerController controller;
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
     
 
-       String selectedRol = (String) rol.getSelectedItem();
+        // Validar que los campos requeridos no estén vacíos
+    if (id.getText().trim().isEmpty() || 
+        nombre.getText().trim().isEmpty() || 
+        correo.getText().trim().isEmpty() || 
+        contraseña.getText().trim().isEmpty() || 
+        rol.getSelectedItem() == null) {
+        
+        showError("Faltan datos requeridos.");  // Mostrar mensaje de error
+        return;
+    }
 
-        // Verificar el rol y mostrar el menú correspondiente
-        if (selectedRol.equals("Administrador")) {
-            // Crear una instancia de MenuAdministrador
-            MenuAdministrador menuAdmin = new MenuAdministrador();
-            menuAdmin.setVisible(true);
-        } else if (selectedRol.equals("Entrenador")) {
-            // Crear una instancia de MenuEntrenador
-            MenuEntrenador menuEntrenador = new MenuEntrenador();
-            menuEntrenador.setVisible(true);
-        } else {
-            // Opcional: Manejar otros roles si es necesario
-            System.out.println("Rol no reconocido");
-        }
+    // Crear un nuevo usuario con los datos ingresados
+    Usuario usuario = new Usuario(
+        Integer.parseInt(id.getText()),  // Convertir id a int
+        nombre.getText(),
+        correo.getText(),
+        contraseña.getText(),
+        Roles.valueOf((String) rol.getSelectedItem())  // Convertir el rol a enum
+    );
 
-        // Cerrar la ventana de login si se desea
-        dispose();  // Esto cierra la ventana actual (el Login)
-    
+    // Llamar al controlador para crear el usuario
+    controller.create(usuario);
+
+    String selectedRol = (String) rol.getSelectedItem();
+
+    // Verificar el rol y mostrar el menú correspondiente
+    if (selectedRol.equals("Administrador")) {
+        // Crear una instancia de MenuAdministrador
+        MenuAdministrador menuAdmin = new MenuAdministrador();
+        menuAdmin.setVisible(true);
+    } else if (selectedRol.equals("Entrenador")) {
+        // Crear una instancia de MenuEntrenador
+        MenuEntrenador menuEntrenador = new MenuEntrenador();
+        menuEntrenador.setVisible(true);
+    } else {
+        // Opcional: Manejar otros roles si es necesario
+        System.out.println("Rol no reconocido");
+    }
+
+    // Cerrar la ventana de login si se desea
+    dispose();  // Esto cierra la ventana actual (el Login)
+
 
     }//GEN-LAST:event_loginActionPerformed
     

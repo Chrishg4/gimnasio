@@ -24,6 +24,7 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
      */
     public EntrenadoresFrame() {
         initComponents();
+        controller= new EntrenadorController(this);
     }
     
      private void clear(){
