@@ -92,7 +92,8 @@ public class ClaseController {
             ClaseDTO dto = dao.read(id);
             if (dto != null) {
                 Clase clase = mapper.toEntity(dto);
-                view.showOne(clase); // Muestra la clase encontrada
+                List<Clase> claseList = List.of(clase);
+                view.showAll(claseList); // Muestra la clase encontrada como parte de una lista
             } else {
                 view.showError("No se encontró la clase con ID: " + id);
             }
