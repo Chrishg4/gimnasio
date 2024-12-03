@@ -38,75 +38,22 @@ public class MenuEntrenador extends javax.swing.JFrame {
                 g.drawImage (icon.getImage(), 0, 0, getWidth(),getHeight(),this);
             }
         };
-        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
-        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+            .addGap(0, 564, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(jLabel1)
-                .addContainerGap(199, Short.MAX_VALUE))
+            .addGap(0, 305, Short.MAX_VALUE)
         );
-
-        jMenu1.setText("Agregar Cliente");
-
-        // Supongo que ya tienes declarado algo como:
-
-        ClientesFrame frmC = new ClientesFrame();
-        // Agregar el MouseListener al JMenu para detectar clics
-        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                // Mostrar el JInternalFrame "jMenu1"
-                jDesktopPane1.add(frmC);
-                if (!frmC.isVisible()) {
-                    frmC.setVisible(true);
-                }
-                frmC.toFront(); // Traer el frame al frente
-            }
-        });
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Entrenadores");
-
-        EntrenadoresFrame frmE = new EntrenadoresFrame();
-        // Agregar el MouseListener al JMenu para detectar clics
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                // Mostrar el JInternalFrame "jMenu1"
-                jDesktopPane1.add(frmE);
-                if (!frmE.isVisible()) {
-                    frmE.setVisible(true);
-                }
-                frmE.toFront(); // Traer el frame al frente
-            }
-        });
-
-        jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Clases");
 
@@ -125,24 +72,6 @@ public class MenuEntrenador extends javax.swing.JFrame {
         });
 
         jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("Pagos");
-
-        PagoFrame frmP = new PagoFrame();
-        // Agregar el MouseListener al JMenu para detectar clics
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                // Mostrar el JInternalFrame "jMenu1"
-                jDesktopPane1.add(frmP);
-                if (!frmP.isVisible()) {
-                    frmP.setVisible(true);
-                }
-                frmP.toFront(); // Traer el frame al frente
-            }
-        });
-
-        jMenuBar1.add(jMenu4);
 
         jMenu5.setText("BuscarCliente");
 
@@ -230,11 +159,7 @@ public class MenuEntrenador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables

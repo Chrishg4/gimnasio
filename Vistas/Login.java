@@ -228,30 +228,7 @@ CustomerController controller;
     }//GEN-LAST:event_correoActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-     /*
-        if (!validateRequired()) {
-        showError("Faltan datos requeridos");
-        return;
-    }
-
-    // Crear un objeto Usuario con los datos del formulario
-    Usuario usuario = new Usuario(
-            txtPassword.getText(),
-            txtNombre.getText(),
-            txtEmail.getText(),
-            (Roles) rol.getSelectedItem()  // El rol seleccionado por el usuario
-    );
-
-    // Llamar al controlador para guardar el usuario en la base de datos
-    UsuarioController controller = new UsuarioController(this);
-    controller.create(usuario);
-
-    // Cambiar el estado de los campos de texto (si es necesario)
-    this.setEditableStateTxts(false);
-
-    // Cambiar el estado de los botones según la lógica de tu interfaz
-    changeStateBtns();
-*/
+    
 
        String selectedRol = (String) rol.getSelectedItem();
 
@@ -277,28 +254,25 @@ CustomerController controller;
     
         @Override
     public void show(Usuario ent) {
-        usuario=ent;
-        if (ent==null) {
-            
-            return;
-        }
-        id.setText(ent.getId());
-        nombre.setText(ent.getNombre());
-        correo.setText(ent.getEmail());
-        contraseña.setText(ent.getPassword());
-        rol.setText(ent.getRol());
+         usuario = ent;
+    if (ent == null) {
+        return;
+    }
+
+    // Convertir el id (int) a String
+    id.setText(String.valueOf(ent.getId())); 
+
+    nombre.setText(ent.getNombre());
+    correo.setText(ent.getEmail());
+    contraseña.setText(ent.getPassword());
+
+    // Convertir el enum Rol a String
+    rol.setSelectedItem(ent.getRol()); 
         
     }
 
     @Override
     public void showAll(List<Usuario> ents) {
-        
-         if(frm==null){
-            frm = new  FrmCustomerSearch(null,true);
-            frm.setObserver(this);
-        }
-        frm.setEnts(ents);
-        frm.setVisible(true);
         
     }
 

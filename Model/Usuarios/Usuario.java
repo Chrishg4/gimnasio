@@ -91,6 +91,11 @@ public class Usuario {
         
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", password=" + password + ", nombre=" + nombre + ", email=" + email + ", rol=" + rol + '}';
+    }
+
     
 }
 //    

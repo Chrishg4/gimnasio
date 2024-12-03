@@ -59,40 +59,40 @@ public class UsuarioController {
 
     // Método para leer un usuario por ID
     public void read(int id) {
-        if (usuarioDAO == null) {
-            vista.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+       if (usuarioDAO == null) {
+        vista.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return;
+    }
+
+    try {
+        UsuarioDTO dto = usuarioDAO.read(id);
+        if (dto == null) {
+            vista.showError("No se encontró el usuario con el ID especificado.");
             return;
         }
-
-        try {
-            UsuarioDTO dto = usuarioDAO.read(id);
-            if (dto == null) {
-                vista.showError("No se encontró el usuario con el ID especificado.");
-                return;
-            }
-            Usuario usuario = mapper.toEntity(dto);
-            vista.showError(usuario);
-        } catch (SQLException ex) {
-            vista.showError("Ocurrió un error al leer el usuario: " + ex.getMessage());
-        }
+        Usuario usuario = mapper.toEntity(dto);
+        vista.show(usuario);  // Mostrar el usuario en la vista
+    } catch (SQLException ex) {
+        vista.showError("Ocurrió un error al leer el usuario: " + ex.getMessage());
+    }
     }
 
     // Método para leer todos los usuarios
     public void readAll() {
-        if (usuarioDAO == null) {
-            vista.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-            return;
-        }
+         if (usuarioDAO == null) {
+        vista.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return;
+    }
 
-        try {
-            List<UsuarioDTO> dtoList = usuarioDAO.readAll();
-            List<Usuario> usuarioList = dtoList.stream()
-                .map(mapper::toEntity)
-                .collect(Collectors.toList());
-            vista.showError(usuarioList);
-        } catch (SQLException ex) {
-            vista.showError("Ocurrió un error al leer los usuarios: " + ex.getMessage());
-        }
+    try {
+        List<UsuarioDTO> dtoList = usuarioDAO.readAll();
+        List<Usuario> usuarioList = dtoList.stream()
+            .map(mapper::toEntity)
+            .collect(Collectors.toList());
+        vista.showAll(usuarioList);  // Mostrar todos los usuarios en la vista
+    } catch (SQLException ex) {
+        vista.showError("Ocurrió un error al leer los usuarios: " + ex.getMessage());
+    }
     }
 
     // Método para actualizar un usuario
