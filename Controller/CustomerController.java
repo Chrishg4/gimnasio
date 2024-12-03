@@ -12,6 +12,7 @@ import Model.Customer.CustomerDTO;
 import Model.Customer.CustomerMapper;
 //import javax.swing.text.View;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -84,22 +85,22 @@ public class CustomerController {
 //        }
     }
 
-    public void readAll() {
+    public List<Customer>  readAll() {
         if (dao == null) {
-            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-            return;
-        }
+        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return new ArrayList<>(); // Retorna una lista vacía en caso de error
+    }
 
-        try {
-            List<CustomerDTO> dtoList = dao.readAll();
-            List<Customer> customerList = dtoList.stream()
-                    .map(mapper::toEntity)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-            view.showAll(customerList);
-        } catch (SQLException ex) {
-            view.showError("Error al cargar los datos: " + ex.getMessage());
-        }
+    try {
+        List<CustomerDTO> dtoList = dao.readAll();  // Obtiene todos los clientes desde la base de datos
+        return dtoList.stream()
+                .map(mapper::toEntity)  // Convierte cada DTO a entidad
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    } catch (SQLException ex) {
+        view.showError("Error al cargar los datos: " + ex.getMessage());
+        return new ArrayList<>(); // Retorna una lista vacía en caso de excepción
+    }
     }
 
     public void update(Customer customer) {

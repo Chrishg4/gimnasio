@@ -289,12 +289,12 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
 
     @Override
     public void showAll(List<Customer> ents) {
-        if(frm==null){
-            frm = new  SearchCliente(null,true);
-            frm.setObserver(this);
-        }
-        frm.setEnts(ents);
-        frm.setVisible(true);
+//        if(frm==null){
+//            frm = new  SearchCliente(null,true);
+//            frm.setObserver(this);
+//        }
+//        frm.setEnts(ents);
+//        frm.setVisible(true);
     }
 
     @Override
@@ -364,6 +364,36 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
+        
+          // Obtener la cédula desde el campo de texto "id"
+    String cedula = id.getText().trim();
+
+    if (cedula.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
+        return;
+    }
+
+    // Llamar al método 'readAll' para obtener todos los clientes
+    List<Customer> customers = controller.readAll();
+
+    // Buscar el cliente que coincida con la cédula ingresada
+    Customer customer = customers.stream()
+        .filter(c -> c.getCedula().equals(cedula))
+        .findFirst()
+        .orElse(null);
+
+    // Verificar si el cliente fue encontrado
+    if (customer == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró un cliente con la cédula ingresada.");
+        return;
+    }
+
+    // Mostrar los datos del cliente en los TextFields correspondientes
+    nombre.setText(customer.getNombre());
+    fechaNan.setText(customer.getFechaNacimiento().toString()); // Convierte a String si es necesario
+    contacto.setText(customer.getContacto());
+    membresia.setText(customer.getTipoMembresia());
+        
     }//GEN-LAST:event_buscarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed

@@ -10,8 +10,7 @@ import Model.Usuarios.Usuario;
 import Model.Usuarios.UsuarioDAO;
 import Model.Usuarios.UsuarioDTO;
 import Model.Usuarios.UsuarioMapper;
-import javax.swing.text.View;
-import javax.swing.text.View;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class UsuarioController {
  private UsuarioDAO usuarioDAO;
-    private View vista;
+    private final View vista;
     private final UsuarioMapper mapper;
     private Usuario usuarioActual; // Para guardar el usuario autenticado
 
