@@ -10,9 +10,10 @@ import Model.Pago.PagoDAO;
 import Model.Pago.PagoDTO;
 import Model.Pago.PagoMapper;
 import java.util.List;
+import View.View;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
-import javax.swing.text.View;
+
 
 /**
  *

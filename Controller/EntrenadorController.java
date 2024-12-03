@@ -10,10 +10,11 @@ import Model.Entrenadores.Entrenador;
 import Model.Entrenadores.EntrenadorDAO;
 import Model.Entrenadores.EntrenadorDTO;
 import Model.Entrenadores.EntrenadorMapper;
+import View.View;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.swing.text.View;
+
 
 /**
  *

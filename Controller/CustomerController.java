@@ -5,11 +5,12 @@
 package Controller;
 
 import Database.Database;
+import View.View;
 import Model.Customer.Customer;
 import Model.Customer.CustomerDAO;
 import Model.Customer.CustomerDTO;
 import Model.Customer.CustomerMapper;
-import javax.swing.text.View;
+//import javax.swing.text.View;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
@@ -60,27 +61,27 @@ public class CustomerController {
     }
 
     public void read(String cedula) {
-        if (dao == null) {
-            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-            return;
-        }
-
-        if (cedula == null || cedula.trim().isEmpty()) {
-            view.showError("Debe proporcionar una cédula válida");
-            return;
-        }
-
-        try {
-            CustomerDTO dto = dao.read(cedula);
-            if (dto == null) {
-                view.showError("No se encontró un cliente con la cédula ingresada");
-                return;
-            }
-            Customer customer = mapper.toEntity(dto);
-            view.showCustomer(customer);
-        } catch (SQLException ex) {
-            view.showError("Ocurrió un error al leer los datos: " + ex.getMessage());
-        }
+//        if (dao == null) {
+//            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+//            return;
+//        }
+//
+//        if (cedula == null || cedula.trim().isEmpty()) {
+//            view.showError("Debe proporcionar una cédula válida");
+//            return;
+//        }
+//
+//        try {
+//            CustomerDTO dto = dao.read(cedula);
+//            if (dto == null) {
+//                view.showError("No se encontró un cliente con la cédula ingresada");
+//                return;
+//            }
+//            Customer customer = mapper.toEntity(dto);
+//            view.showCustomer(customer);
+//        } catch (SQLException ex) {
+//            view.showError("Ocurrió un error al leer los datos: " + ex.getMessage());
+//        }
     }
 
     public void readAll() {
