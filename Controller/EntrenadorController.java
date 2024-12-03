@@ -11,6 +11,7 @@ import Model.Entrenadores.EntrenadorDAO;
 import Model.Entrenadores.EntrenadorDTO;
 import Model.Entrenadores.EntrenadorMapper;
 import View.View;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -64,42 +65,42 @@ public class EntrenadorController {
     }
 
     // Método para obtener todos los entrenadores
-    public void readAll() {
-        if (dao == null) {
-            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-            return;
-        }
+    public List<Entrenador> readAll() {
+       if (dao == null) {
+        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return Collections.emptyList(); // Retorna una lista vacía si hay un error
+    }
 
-        try {
-            List<EntrenadorDTO> dtoList = dao.readAll();
-            List<Entrenador> entrenadorList = dtoList.stream()
-                    .map(mapper::toEntity)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-            view.showAll(entrenadorList); // Muestra los entrenadores en la vista
-        } catch (SQLException ex) {
-            view.showError("Error al cargar los datos: " + ex.getMessage());
-        }
+    try {
+        List<EntrenadorDTO> dtoList = dao.readAll();
+        return dtoList.stream()
+                .map(mapper::toEntity)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    } catch (SQLException ex) {
+        view.showError("Error al cargar los datos: " + ex.getMessage());
+        return Collections.emptyList(); // Retorna una lista vacía si ocurre una excepción
+    }
     }
 
     // Método para obtener un entrenador por ID
     public void read(int id) {
-        if (dao == null) {
-            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-            return;
-        }
+       if (dao == null) {
+        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return;
+    }
 
-        try {
-            EntrenadorDTO dto = dao.read(id);
-            if (dto != null) {
-                Entrenador entrenador = mapper.toEntity(dto);
-                view.showOne(entrenador); // Muestra el entrenador encontrado
-            } else {
-                view.showError("No se encontró el entrenador con ID: " + id);
-            }
-        } catch (SQLException ex) {
-            view.showError("Error al cargar el entrenador: " + ex.getMessage());
+    try {
+        EntrenadorDTO dto = dao.read(id);
+        if (dto != null) {
+            Entrenador entrenador = mapper.toEntity(dto);
+            view.show(entrenador); // Usamos el método show de la interfaz View
+        } else {
+            view.showError("No se encontró el entrenador con ID: " + id);
         }
+    } catch (SQLException ex) {
+        view.showError("Error al cargar el entrenador: " + ex.getMessage());
+    }
     }
 
     // Método para actualizar un entrenador

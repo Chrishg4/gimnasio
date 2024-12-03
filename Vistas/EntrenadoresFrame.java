@@ -256,20 +256,27 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
     }// </editor-fold>//GEN-END:initComponents
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        // TODO add your handling code here:
-                  if (!validateRequired()){
-            showError("Faltan datos requeridos");
-            return;
-        }
-        entrenador=new Entrenador(
-                id.getText(),
-                nombre.getText(),
-                contacto.getText(),
-                especialidad.getText()
+          // TODO add your handling code here:
+    if (!validateRequired()) {
+        showError("Faltan datos requeridos");
+        return;
+    }
+    try {
+        // Convertir id a entero
+        int idValue = Integer.parseInt(id.getText());
+
+        entrenador = new Entrenador(
+            idValue, // Pasar el id convertido a int
+            nombre.getText(),
+            contacto.getText(),
+            especialidad.getText()
         );
         controller.create(entrenador);
-        
+
         changeStateBtns();
+    } catch (NumberFormatException e) {
+        showError("El ID debe ser un número entero");
+    }
     }//GEN-LAST:event_guardarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
@@ -295,6 +302,39 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
+            // Obtener la cédula (ID) desde el campo de texto "id"
+    String cedula = id.getText().trim();
+
+    if (cedula.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
+        return;
+    }
+
+    // Llamar al método 'readAll' para obtener todos los entrenadores
+    List<Entrenador> entrenadores = controller.readAll();
+
+    // Buscar el entrenador que coincida con la cédula ingresada
+    Entrenador entrenador = entrenadores.stream()
+            .filter(e -> String.valueOf(e.getId()).equals(cedula))
+            .findFirst()
+            .orElse(null);
+
+    // Verificar si el entrenador fue encontrado
+    if (entrenador == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró un entrenador con la cédula ingresada.");
+        return;
+    }
+
+    // Mostrar los datos del entrenador encontrado directamente en los textfields
+    this.entrenador = entrenador;
+
+    id.setText(String.valueOf(entrenador.getId()));
+    nombre.setText(entrenador.getNombre());
+    
+    contacto.setText(entrenador.getContacto());
+    especialidad.setText(entrenador.getEspecialidades());
+
+    changeStateBtns(); // Cambiar el estado de los botones si es necesario
         
     }//GEN-LAST:event_buscarActionPerformed
 
@@ -306,6 +346,33 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         // TODO add your handling code here:
+        // Verificar si hay un entrenador cargado
+    if (entrenador == null) {
+        showError("No hay ningún entrenador cargado actualmente");
+        return;
+    }
+
+    // Validar los datos requeridos
+    if (!validateRequired()) {
+        showError("Faltan datos requeridos");
+        return;
+    }
+
+    // Obtener los nuevos valores de contacto y especialidad
+    String newContacto = contacto.getText().trim();
+    String newEspecialidad = especialidad.getText().trim();
+
+    // Verificar si hay cambios en los datos
+    if (!newContacto.equals(entrenador.getContacto()) || !newEspecialidad.equals(entrenador.getEspecialidades())) {
+        entrenador.setContacto(newContacto);
+        entrenador.setEspecialidades(newEspecialidad);
+
+        // Actualizar el entrenador en la base de datos
+        controller.update(entrenador);
+        showMessage("Datos actualizados correctamente");
+    } else {
+        showMessage("No se realizaron cambios");
+    }
     }//GEN-LAST:event_editarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed
@@ -343,15 +410,17 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
 
     @Override
     public void show(Entrenador ent) {
- entrenador=ent;
-        if (ent==null) {
-            clear();
-            return;
-        }
-        id.setText(ent.getId());
-        nombre.setText(ent.getNombre());
-        contacto.setText(ent.getContacto());
-        especialidad.setText(ent.getEspecialidades());    }
+   entrenador = ent;
+    if (ent == null) {
+        clear();
+        return;
+    }
+    // Convertir el id (int) a String
+    id.setText(String.valueOf(ent.getId())); 
+    nombre.setText(ent.getNombre());
+    contacto.setText(ent.getContacto());
+    especialidad.setText(ent.getEspecialidades());   
+    }
 
     @Override
     public void showAll(List<Entrenador> ents) {
