@@ -16,16 +16,20 @@ import javax.swing.JOptionPane;
  *
  * @author chris
  */
-public class ClientesFrame extends javax.swing.JInternalFrame implements View<Customer>{
-     Customer customer;
-     CustomerController controller;
-     SearchCliente frm;
+public class ClientesFrame extends javax.swing.JInternalFrame implements View<Customer> {
+
+    Customer customer;
+    CustomerController controller;
+    SearchCliente frm;
+
     /**
      * Creates new form ClientesFrame
      */
     public ClientesFrame() {
         initComponents();
+        controller= new CustomerController(this);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -261,21 +265,20 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     private void clear(){
+    private void clear() {
         UtilGui.clearTxts(
                 id,
                 nombre,
                 fechaNan,
                 contacto,
                 membresia
-                
         );
     }
-    
-     @Override
+
+    @Override
     public void show(Customer ent) {
-       customer=ent;
-        if (ent==null) {
+        customer = ent;
+        if (ent == null) {
             clear();
             return;
         }
@@ -284,7 +287,7 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
         fechaNan.setText(UtilDate.toString(ent.getFechaNacimiento()));
         contacto.setText(ent.getContacto());
         membresia.setText(ent.getTipoMembresia());
-        
+
     }
 
     @Override
@@ -299,7 +302,7 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
 
     @Override
     public void showMessage(String msg) {
-       JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -309,23 +312,21 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
 
     @Override
     public boolean validateRequired() {
-         return UtilGui.validateFields(id,nombre,fechaNan,contacto,membresia);
+        return UtilGui.validateFields(id, nombre, fechaNan, contacto, membresia);
     }
 
     public void changeStateBtns() {
-        UtilGui.changeStateButtons(guardar,eliminar,buscar,editar,salida, clear);
+        UtilGui.changeStateButtons(guardar, eliminar, buscar, editar, salida, clear);
     }
-    
+
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
 
-
         // TODO add your handling code here:
-        
-        if (!validateRequired()){
+        if (!validateRequired()) {
             showError("Faltan datos requeridos");
             return;
         }
-        customer=new Customer(
+        customer = new Customer(
                 id.getText(),
                 nombre.getText(),
                 UtilDate.toLocalDate(fechaNan.getText()),
@@ -333,76 +334,77 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
                 membresia.getText()
         );
         controller.create(customer);
-        
+
         changeStateBtns();
-        
-        
-        
+
+
     }//GEN-LAST:event_guardarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
 
-            if (customer == null) {
-        showError("No hay ningún cliente cargado actualmente");
-        return;
-    }
+        if (customer == null) {
+            showError("No hay ningún cliente cargado actualmente");
+            return;
+        }
 
-    int option = JOptionPane.showConfirmDialog(
-        this, 
-        "¿Está seguro que desea eliminar el cliente actual?",
-        "Confirmar Eliminación", 
-        JOptionPane.YES_NO_OPTION
-    );
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro que desea eliminar el cliente actual?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
 
-    if (option == JOptionPane.NO_OPTION) return;
+        if (option == JOptionPane.NO_OPTION) {
+            return;
+        }
 
-    // Aquí obtenemos la cédula del cliente y la pasamos al método delete
-    controller.delete(customer.getCedula());
-    clear();
+        // Aquí obtenemos la cédula del cliente y la pasamos al método delete
+        controller.delete(customer.getCedula());
+        clear();
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
-        
-          // Obtener la cédula desde el campo de texto "id"
-    String cedula = id.getText().trim();
 
-    if (cedula.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
-        return;
-    }
+        // Obtener la cédula desde el campo de texto "id"
+        String cedula = id.getText().trim();
 
-    // Llamar al método 'readAll' para obtener todos los clientes
-    List<Customer> customers = controller.readAll();
+        if (cedula.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
+            return;
+        }
 
-    // Buscar el cliente que coincida con la cédula ingresada
-    Customer customer = customers.stream()
-        .filter(c -> c.getCedula().equals(cedula))
-        .findFirst()
-        .orElse(null);
+        // Llamar al método 'readAll' para obtener todos los clientes
+        List<Customer> customers = controller.readAll();
 
-    // Verificar si el cliente fue encontrado
-    if (customer == null) {
-        JOptionPane.showMessageDialog(this, "No se encontró un cliente con la cédula ingresada.");
-        return;
-    }
+        // Buscar el cliente que coincida con la cédula ingresada
+        Customer customer = customers.stream()
+                .filter(c -> c.getCedula().equals(cedula))
+                .findFirst()
+                .orElse(null);
 
-    // Mostrar los datos del cliente en los TextFields correspondientes
-    nombre.setText(customer.getNombre());
-    fechaNan.setText(customer.getFechaNacimiento().toString()); // Convierte a String si es necesario
-    contacto.setText(customer.getContacto());
-    membresia.setText(customer.getTipoMembresia());
-        
+        // Verificar si el cliente fue encontrado
+        if (customer == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró un cliente con la cédula ingresada.");
+            return;
+        }
+
+        // Mostrar los datos del cliente en los TextFields correspondientes
+        nombre.setText(customer.getNombre());
+        fechaNan.setText(customer.getFechaNacimiento().toString()); // Convierte a String si es necesario
+        contacto.setText(customer.getContacto());
+        membresia.setText(customer.getTipoMembresia());
+
     }//GEN-LAST:event_buscarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         // TODO add your handling code here:
-         if (customer==null){
+        if (customer == null) {
             showError("No hay ningun cliente cargado actualmente");
             return;
         }
-        if(!validateRequired()){
+        if (!validateRequired()) {
             showError("Faltan datos requeridos");
             return;
         }
@@ -413,9 +415,9 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
             customer.setTipoMembresia(newMembresia);
             controller.update(customer);
             showMessage("Datos actualizados correctamente");
-        }else{
-             showMessage("No se realizaron cambios");
-        }     
+        } else {
+            showMessage("No se realizaron cambios");
+        }
     }//GEN-LAST:event_editarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed
@@ -430,7 +432,7 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         // TODO add your handling code here:
         clear();
-    
+
         changeStateBtns();
     }//GEN-LAST:event_clearActionPerformed
 
@@ -464,5 +466,4 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
     private javax.swing.JButton salida;
     // End of variables declaration//GEN-END:variables
 
-    
 }
