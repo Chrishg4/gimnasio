@@ -15,8 +15,9 @@ import javax.swing.JOptionPane;
  *
  * @author chris
  */
-public class EntrenadoresFrame extends javax.swing.JInternalFrame implements View<Entrenador>{
-      Entrenador entrenador;
+public class EntrenadoresFrame extends javax.swing.JInternalFrame implements View<Entrenador> {
+
+    Entrenador entrenador;
     EntrenadorController controller;
 
     /**
@@ -24,21 +25,19 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
      */
     public EntrenadoresFrame() {
         initComponents();
-        controller= new EntrenadorController(this);
+        controller = new EntrenadorController(this);
     }
-    
-     private void clear(){
+
+    private void clear() {
         UtilGui.clearTxts(
-                id,
                 nombre,
                 contacto,
                 especialidad
-                
         );
     }
-      
-       public void changeStateBtns() {
-        UtilGui.changeStateButtons(guardar,eliminar,buscar,editar, salida, clear);
+
+    public void changeStateBtns() {
+        UtilGui.changeStateButtons(guardar, eliminar, buscar, editar, salida, clear);
     }
 
     /**
@@ -54,11 +53,9 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         nombre = new javax.swing.JTextField();
-        id = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         contacto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         especialidad = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         guardar = new javax.swing.JButton();
@@ -104,9 +101,6 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel4.setText("Contacto");
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Cedula");
-
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel2.setText("Nombre");
 
@@ -117,45 +111,41 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel1))
-                            .addGap(94, 94, 94))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(id)
-                            .addGap(49, 49, 49)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap(401, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                .addGap(72, 72, 72))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(nombre)
+                                .addGap(37, 37, 37)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(especialidad, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Save.png"))); // NOI18N
@@ -213,9 +203,7 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(56, 56, 56)
@@ -232,7 +220,8 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
                 .addComponent(salida, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,140 +239,142 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
                     .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salida, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private static int contadorId = 1;
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-          // TODO add your handling code here:
-    if (!validateRequired()) {
-        showError("Faltan datos requeridos");
-        return;
-    }
-    try {
-        // Convertir id a entero
-        int idValue = Integer.parseInt(id.getText());
+        // TODO add your handling code here:
 
-        entrenador = new Entrenador(
-            idValue, // Pasar el id convertido a int
-            nombre.getText(),
-            contacto.getText(),
-            especialidad.getText()
-        );
-        controller.create(entrenador);
+        if (!validateRequired()) {
+            showError("Faltan datos requeridos");
+            return;
+        }
+        try {
+         
+            int idValue = controller.generarId(); 
 
-        changeStateBtns();
-    } catch (NumberFormatException e) {
-        showError("El ID debe ser un número entero");
-    }
+            entrenador = new Entrenador(
+                    idValue,
+                    nombre.getText(),
+                    contacto.getText(),
+                    especialidad.getText()
+            );
+            controller.create(entrenador);
+
+            changeStateBtns();
+        } catch (NumberFormatException e) {
+            showError("El ID debe ser un número entero");
+        }
     }//GEN-LAST:event_guardarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
-         if (entrenador == null) {
-        showError("No hay ningún entrenador cargado actualmente");
-        return;
-    }
+        if (entrenador == null) {
+            showError("No hay ningún entrenador cargado actualmente");
+            return;
+        }
 
-    int option = JOptionPane.showConfirmDialog(
-        this, 
-        "¿Está seguro que desea eliminar el entrenador actual?",
-        "Confirmar Eliminación", 
-        JOptionPane.YES_NO_OPTION
-    );
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro que desea eliminar el entrenador actual?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
 
-    if (option == JOptionPane.NO_OPTION) return;
+        if (option == JOptionPane.NO_OPTION) {
+            return;
+        }
 
-    // Aquí obtenemos el id del entrenador y lo pasamos al método delete
-    controller.delete(entrenador.getId());
-    clear();
+        // Aquí obtenemos el id del entrenador y lo pasamos al método delete
+        controller.delete(entrenador.getId());
+        clear();
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
-            // Obtener la cédula (ID) desde el campo de texto "id"
-    String cedula = id.getText().trim();
+        // Obtener la cédula (ID) desde el campo de texto "id"
+        String nombreBuscado = nombre.getText().trim();
 
-    if (cedula.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
-        return;
-    }
+        if (nombreBuscado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
+            return;
+        }
 
-    // Llamar al método 'readAll' para obtener todos los entrenadores
-    List<Entrenador> entrenadores = controller.readAll();
+        // Llamar al método 'readAll' para obtener todos los entrenadores
+        List<Entrenador> entrenadores = controller.readAll();
 
-    // Buscar el entrenador que coincida con la cédula ingresada
-    Entrenador entrenador = entrenadores.stream()
-            .filter(e -> String.valueOf(e.getId()).equals(cedula))
-            .findFirst()
-            .orElse(null);
+        // Buscar el entrenador que coincida con la cédula ingresada
+        Entrenador entrenador = entrenadores.stream()
+                .filter(e -> e.getNombre().equalsIgnoreCase(nombreBuscado))
+                .findFirst()
+                .orElse(null);
 
-    // Verificar si el entrenador fue encontrado
-    if (entrenador == null) {
-        JOptionPane.showMessageDialog(this, "No se encontró un entrenador con la cédula ingresada.");
-        return;
-    }
+        // Verificar si el entrenador fue encontrado
+        if (entrenador == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró un entrenador con la cédula ingresada.");
+            return;
+        }
 
-    // Mostrar los datos del entrenador encontrado directamente en los textfields
-    this.entrenador = entrenador;
+        // Mostrar los datos del entrenador encontrado directamente en los textfields
+        this.entrenador = entrenador;
 
-    id.setText(String.valueOf(entrenador.getId()));
-    nombre.setText(entrenador.getNombre());
-    
-    contacto.setText(entrenador.getContacto());
-    especialidad.setText(entrenador.getEspecialidades());
+        nombre.setText(entrenador.getNombre());
+        contacto.setText(entrenador.getContacto());
+        especialidad.setText(entrenador.getEspecialidades());
 
-    changeStateBtns(); // Cambiar el estado de los botones si es necesario
-        
+        changeStateBtns(); // Cambiar el estado de los botones si es necesario
+
     }//GEN-LAST:event_buscarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         // TODO add your handling code here:
-         show(entrenador);
+        show(entrenador);
         changeStateBtns();
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         // TODO add your handling code here:
         // Verificar si hay un entrenador cargado
-    if (entrenador == null) {
-        showError("No hay ningún entrenador cargado actualmente");
-        return;
-    }
+        if (entrenador == null) {
+            showError("No hay ningún entrenador cargado actualmente");
+            return;
+        }
 
-    // Validar los datos requeridos
-    if (!validateRequired()) {
-        showError("Faltan datos requeridos");
-        return;
-    }
+        // Validar los datos requeridos
+        if (!validateRequired()) {
+            showError("Faltan datos requeridos");
+            return;
+        }
 
-    // Obtener los nuevos valores de contacto y especialidad
-    String newContacto = contacto.getText().trim();
-    String newEspecialidad = especialidad.getText().trim();
+        // Obtener los nuevos valores de contacto y especialidad
+        String newContacto = contacto.getText().trim();
+        String newEspecialidad = especialidad.getText().trim();
 
-    // Verificar si hay cambios en los datos
-    if (!newContacto.equals(entrenador.getContacto()) || !newEspecialidad.equals(entrenador.getEspecialidades())) {
-        entrenador.setContacto(newContacto);
-        entrenador.setEspecialidades(newEspecialidad);
+        // Verificar si hay cambios en los datos
+        if (!newContacto.equals(entrenador.getContacto()) || !newEspecialidad.equals(entrenador.getEspecialidades())) {
+            entrenador.setContacto(newContacto);
+            entrenador.setEspecialidades(newEspecialidad);
 
-        // Actualizar el entrenador en la base de datos
-        controller.update(entrenador);
-        showMessage("Datos actualizados correctamente");
-    } else {
-        showMessage("No se realizaron cambios");
-    }
+            // Actualizar el entrenador en la base de datos
+            controller.update(entrenador);
+            showMessage("Datos actualizados correctamente");
+        } else {
+            showMessage("No se realizaron cambios");
+        }
     }//GEN-LAST:event_editarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_salidaActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         // TODO add your handling code here:
-             clear();
+        clear();
         changeStateBtns();
     }//GEN-LAST:event_clearActionPerformed
 
@@ -397,8 +388,6 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
     private javax.swing.JButton eliminar;
     private javax.swing.JTextField especialidad;
     private javax.swing.JButton guardar;
-    private javax.swing.JTextField id;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -411,16 +400,15 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
 
     @Override
     public void show(Entrenador ent) {
-   entrenador = ent;
-    if (ent == null) {
-        clear();
-        return;
-    }
-    // Convertir el id (int) a String
-    id.setText(String.valueOf(ent.getId())); 
-    nombre.setText(ent.getNombre());
-    contacto.setText(ent.getContacto());
-    especialidad.setText(ent.getEspecialidades());   
+        entrenador = ent;
+        if (ent == null) {
+            clear();
+            return;
+        }
+        // Convertir el id (int) a String
+        nombre.setText(ent.getNombre());
+        contacto.setText(ent.getContacto());
+        especialidad.setText(ent.getEspecialidades());
     }
 
     @Override
@@ -430,7 +418,7 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
 
     @Override
     public void showMessage(String msg) {
-       JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -440,6 +428,6 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
 
     @Override
     public boolean validateRequired() {
-         return UtilGui.validateFields(id,nombre,contacto,especialidad);
+        return UtilGui.validateFields(nombre, contacto, especialidad);
     }
 }

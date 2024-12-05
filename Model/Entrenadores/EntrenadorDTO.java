@@ -15,6 +15,10 @@ public class EntrenadorDTO {
     private String contacto;
     private String especialidades;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public int getId() {
         return id;
     }

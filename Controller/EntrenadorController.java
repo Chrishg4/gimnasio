@@ -27,6 +27,12 @@ public class EntrenadorController {
     private final View view;
     private final EntrenadorMapper mapper;
 
+    private int contadorId = 1;
+
+    public int generarId() {
+        return contadorId++;
+    }
+    
     public EntrenadorController(View view) {
         this.view = view;
         this.mapper = new EntrenadorMapper();

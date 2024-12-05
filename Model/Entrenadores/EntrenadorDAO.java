@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -22,15 +24,27 @@ public class EntrenadorDAO extends DaoCRUD<EntrenadorDTO> {
 
     @Override
     public boolean create(EntrenadorDTO dto) throws SQLException {
-        stmt = connection.prepareStatement("call CouchCreate(?,?,?,?)");
-        stmt.setInt(1, dto.getId());
-        stmt.setString(2, dto.getNombre());
-        stmt.setString(3, dto.getContacto());
-        stmt.setString(4, dto.getContacto());
-        stmt.setString(5, dto.getEspecialidades());
+        stmt = connection.prepareStatement("call CouchCreate(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        stmt.setString(1, dto.getNombre());
+        stmt.setString(2, dto.getContacto());
+        stmt.setString(3, dto.getEspecialidades());
         //Verifica si agrega a la bd los datos
-        return stmt.executeUpdate() > 0;
+        int rowsAffected = stmt.executeUpdate();
+
+    // Si la inserción fue exitosa, obtenemos el ID generado
+    if (rowsAffected > 0) {
+        try (ResultSet rs = stmt.getGeneratedKeys()) {
+            if (rs.next()) {
+                // Asumiendo que el ID generado es el primer valor
+                int generatedId = rs.getInt(1);
+                dto.setId(generatedId);  // Puedes asignar el ID generado al DTO si lo necesitas
+            }
+        }
+        return true;
     }
+
+    return false;
+}
 
     @Override
     public EntrenadorDTO read(Object id) throws SQLException {
