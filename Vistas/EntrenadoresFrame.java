@@ -245,7 +245,7 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private static int contadorId = 1;
+   
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
 
