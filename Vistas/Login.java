@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
  * 
  */
 public class Login extends javax.swing.JFrame implements View<Usuario> {
-CustomerController controller;
+UsuarioController controller;
     Usuario usuario;
     /**
      * Creates new form Login
@@ -229,7 +229,7 @@ CustomerController controller;
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
     
-/*
+
         // Validar que los campos requeridos no estén vacíos
     if (id.getText().trim().isEmpty() || 
         nombre.getText().trim().isEmpty() || 
@@ -252,7 +252,7 @@ CustomerController controller;
 
     // Llamar al controlador para crear el usuario
     controller.create(usuario);
-*/
+
     String selectedRol = (String) rol.getSelectedItem();
 
     // Verificar el rol y mostrar el menú correspondiente

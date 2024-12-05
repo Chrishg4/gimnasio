@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.PopupMenu;
 import javax.swing.ImageIcon;
 import Vistas.ClientesFrame;
+import java.awt.Color;
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 
 /**
@@ -21,6 +23,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
      */
     public MenuAdministrador() {
         initComponents();
+        quitarFondoBoton(atras);
     }
 
     /**
@@ -38,6 +41,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
                 g.drawImage (icon.getImage(), 0, 0, getWidth(),getHeight(),this);
             }
         };
+        atras = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -47,15 +51,30 @@ public class MenuAdministrador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/atras.png"))); // NOI18N
+        atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atrasActionPerformed(evt);
+            }
+        });
+
+        jDesktopPane1.setLayer(atras, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 564, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(482, Short.MAX_VALUE)
+                .addComponent(atras)
+                .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 305, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap(227, Short.MAX_VALUE)
+                .addComponent(atras)
+                .addContainerGap())
         );
 
         jMenu1.setText("Agregar Cliente");
@@ -166,6 +185,19 @@ public class MenuAdministrador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
+        // TODO add your handling code here:
+         // Cerrar el AdministradorFrame actual
+        dispose();
+        
+        // Crear y mostrar la ventana Login
+        Login log = new Login();
+        log.setVisible(true);
+    }//GEN-LAST:event_atrasActionPerformed
+    private void quitarFondoBoton(JButton boton) {
+         boton.setBackground(new Color(0, 0, 0, 0));
+    boton.setBorder(null);
+    }
     /**
      * @param args the command line arguments
      */
@@ -205,6 +237,7 @@ public class MenuAdministrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton atras;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
