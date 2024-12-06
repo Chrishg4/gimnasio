@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author chris
  */
+
 public class ClientesFrame extends javax.swing.JInternalFrame implements View<Customer> {
 
     Customer customer;
@@ -358,16 +359,12 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
         if (option == JOptionPane.NO_OPTION) {
             return;
         }
-
-        // Aquí obtenemos la cédula del cliente y la pasamos al método delete
         controller.delete(customer.getCedula());
         clear();
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        // TODO add your handling code here:
 
-        // Obtener la cédula desde el campo de texto "id"
         String cedula = id.getText().trim();
 
         if (cedula.isEmpty()) {
@@ -379,7 +376,7 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
         List<Customer> customers = controller.readAll();
 
         // Buscar el cliente que coincida con la cédula ingresada
-        Customer customer = customers.stream()
+        customer = customers.stream()
                 .filter(c -> c.getCedula().equals(cedula))
                 .findFirst()
                 .orElse(null);
@@ -399,25 +396,31 @@ public class ClientesFrame extends javax.swing.JInternalFrame implements View<Cu
     }//GEN-LAST:event_buscarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
-        // TODO add your handling code here:
-        if (customer == null) {
-            showError("No hay ningun cliente cargado actualmente");
-            return;
-        }
-        if (!validateRequired()) {
-            showError("Faltan datos requeridos");
-            return;
-        }
-        String newContacto = contacto.getText().trim();
-        String newMembresia = membresia.getText().trim();
-        if (!newContacto.equals(customer.getContacto()) || !newMembresia.equals(customer.getTipoMembresia())) {
-            customer.setContacto(newContacto);
-            customer.setTipoMembresia(newMembresia);
-            controller.update(customer);
-            showMessage("Datos actualizados correctamente");
-        } else {
-            showMessage("No se realizaron cambios");
-        }
+
+  if (customer == null) {
+        showError("No hay ningún cliente cargado actualmente");
+        return;
+    }
+
+    if (!validateRequired()) {
+        showError("Faltan datos requeridos");
+        return;
+    }
+
+    String newContacto = contacto.getText().trim();
+    String newMembresia = membresia.getText().trim();
+
+    if (!newContacto.equals(customer.getContacto()) || !newMembresia.equals(customer.getTipoMembresia())) {
+        customer.setContacto(newContacto);
+        customer.setTipoMembresia(newMembresia);
+
+        controller.update(customer);
+
+        showMessage("Datos actualizados correctamente");
+    } else {
+        
+        showMessage("No se realizaron cambios");
+    }
     }//GEN-LAST:event_editarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed

@@ -68,7 +68,7 @@ public class CustomerDAO extends DaoCRUD<CustomerDTO> {
 
     @Override
     public boolean update(CustomerDTO dto) throws SQLException {
-           stmt = connection.prepareStatement("call CustomerUpdate(?,?)");
+        stmt = connection.prepareStatement("call CustomerUpdate(?,?,?)");
         stmt.setString(1, dto.getCedula());
         stmt.setString(2, dto.getContacto());
         stmt.setString(3, dto.getTipoMembresia());

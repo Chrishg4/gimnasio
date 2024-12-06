@@ -62,27 +62,22 @@ public class CustomerController {
     }
 
     public void read(String cedula) {
-//        if (dao == null) {
-//            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-//            return;
-//        }
-//
-//        if (cedula == null || cedula.trim().isEmpty()) {
-//            view.showError("Debe proporcionar una cédula válida");
-//            return;
-//        }
-//
-//        try {
-//            CustomerDTO dto = dao.read(cedula);
-//            if (dto == null) {
-//                view.showError("No se encontró un cliente con la cédula ingresada");
-//                return;
-//            }
-//            Customer customer = mapper.toEntity(dto);
-//            view.showCustomer(customer);
-//        } catch (SQLException ex) {
-//            view.showError("Ocurrió un error al leer los datos: " + ex.getMessage());
-//        }
+        if (dao == null || cedula == null || cedula.trim().isEmpty()) {
+        view.showError("Debe proporcionar una cédula válida.");
+        return;
+    }
+
+    try {
+        CustomerDTO dto = dao.read(cedula);
+        if (dto == null) {
+            view.showError("No se encontró un cliente con la cédula ingresada.");
+            return;
+        }
+        Customer customer = mapper.toEntity(dto);
+        view.show(customer); // Muestra los datos del cliente en la vista para su edición
+    } catch (SQLException ex) {
+        view.showError("Ocurrió un error al cargar los datos: " + ex.getMessage());
+    }
     }
 
     public List<Customer>  readAll() {
@@ -104,23 +99,16 @@ public class CustomerController {
     }
 
     public void update(Customer customer) {
-        if (dao == null) {
-            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        if (dao == null || customer == null || !validateRequired(customer)) {
+            view.showError("Faltan datos requeridos.");
             return;
         }
-
-        if (customer == null || !validateRequired(customer)) {
-            view.showError("Faltan datos requeridos");
-            return;
-        }
-
         try {
             if (validatePK(customer.getCedula())) {
                 view.showError("La cédula ingresada no se encuentra registrada");
                 return;
             }
             dao.update(mapper.toDto(customer));
-            view.showMessage("Datos actualizados correctamente");
         } catch (SQLException ex) {
             view.showError("Ocurrió un error al actualizar los datos: " + ex.getMessage());
         }

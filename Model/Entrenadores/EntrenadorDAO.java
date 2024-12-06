@@ -80,8 +80,9 @@ public class EntrenadorDAO extends DaoCRUD<EntrenadorDTO> {
 
     @Override
     public boolean update(EntrenadorDTO dto) throws SQLException {
-        stmt = connection.prepareStatement("call CouchUpdate(?,?)");
-        stmt.setString(1, dto.getContacto());
+        stmt = connection.prepareStatement("call CouchUpdate(?,?,?)");
+        stmt.setInt(1, dto.getId());
+        stmt.setString(2, dto.getContacto());
         stmt.setString(3, dto.getEspecialidades());
         return stmt.executeUpdate() > 0;
     }
