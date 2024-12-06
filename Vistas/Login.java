@@ -39,6 +39,7 @@ UsuarioController controller;
         
         initComponents();
         quitarFondoBoton(login);
+        controller= new UsuarioController(this);
         
     }
     
@@ -105,7 +106,12 @@ UsuarioController controller;
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Rol");
 
-        rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Entrenador", " ", " ", " " }));
+        rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "ENTRENADOR", "", "", "" }));
+        rol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rolActionPerformed(evt);
+            }
+        });
 
         login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Login.png"))); // NOI18N
         login.addActionListener(new java.awt.event.ActionListener() {
@@ -172,7 +178,7 @@ UsuarioController controller;
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGap(199, 199, 199)
                         .addComponent(jLabel6)))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,11 +262,11 @@ UsuarioController controller;
     String selectedRol = (String) rol.getSelectedItem();
 
     // Verificar el rol y mostrar el menú correspondiente
-    if (selectedRol.equals("Administrador")) {
+    if (selectedRol.equals("ADMINISTRADOR")) {
         // Crear una instancia de MenuAdministrador
         MenuAdministrador menuAdmin = new MenuAdministrador();
         menuAdmin.setVisible(true);
-    } else if (selectedRol.equals("Entrenador")) {
+    } else if (selectedRol.equals("ENTRENADOR")) {
         // Crear una instancia de MenuEntrenador
         MenuEntrenador menuEntrenador = new MenuEntrenador();
         menuEntrenador.setVisible(true);
@@ -274,6 +280,10 @@ UsuarioController controller;
 
 
     }//GEN-LAST:event_loginActionPerformed
+
+    private void rolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rolActionPerformed
     
         @Override
     public void show(Usuario ent) {

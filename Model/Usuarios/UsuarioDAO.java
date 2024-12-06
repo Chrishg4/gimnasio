@@ -21,7 +21,7 @@ public class UsuarioDAO extends DaoCRUD<UsuarioDTO> {
 
     @Override
     public boolean update(UsuarioDTO dto) throws SQLException {
-        stmt = connection.prepareStatement("call UsuarioUpdate(?,?,?,?,?,?)");
+        stmt = connection.prepareStatement("call UserUpdate(?,?,?,?,?)");
         stmt.setInt(1, dto.getId());
         
         stmt.setString(2, dto.getPassword());
@@ -34,7 +34,7 @@ public class UsuarioDAO extends DaoCRUD<UsuarioDTO> {
 
     @Override
     public boolean create(UsuarioDTO dto) throws SQLException {
-          stmt = connection.prepareStatement("call UsuarioCreate(?,?,?,?,?,?)");
+          stmt = connection.prepareStatement("call UserCreate(?,?,?,?,?)");
         stmt.setInt(1, dto.getId());
         
         stmt.setString(2, dto.getPassword());

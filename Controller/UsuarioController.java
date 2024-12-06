@@ -51,7 +51,7 @@ public class UsuarioController {
 
         try {
             usuarioDAO.create(mapper.toDto(usuario));
-            vista.showError("Usuario creado correctamente.");
+            vista.showMessage("Usuario creado correctamente.");
         } catch (SQLException ex) {
             vista.showError("Ocurrió un error al crear el usuario: " + ex.getMessage());
         }
