@@ -68,7 +68,7 @@ public class PagoController {
                 return;
             }
             Pago pago = mapper.toEntity(dto);
-            view.showPago(pago);  // Mostrar los detalles del pago
+            view.show(pago);  // Mostrar los detalles del pago
         } catch (SQLException ex) {
             view.showError("Ocurrió un error al leer los datos del pago: " + ex.getMessage());
         }
@@ -85,7 +85,7 @@ public class PagoController {
             List<Pago> pagoList = dtoList.stream()
                     .map(mapper::toEntity)
                     .collect(Collectors.toList());
-            view.showAllPagos(pagoList);  // Mostrar todos los pagos
+            view.showAll(pagoList);  // Mostrar todos los pagos
         } catch (SQLException ex) {
             view.showError("Error al cargar los pagos: " + ex.getMessage());
         }
