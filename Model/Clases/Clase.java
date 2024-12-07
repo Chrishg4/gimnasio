@@ -5,6 +5,7 @@
 package Model.Clases;
 
 import Model.Entrenadores.Entrenador;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +17,7 @@ public class Clase {
     private int id;
     private String tipoClase;
     private LocalDateTime horario;
-    private Entrenador entrenadorId;
+    private int entrenadorId;
     private int capacidadMaxima;
 
     public int getId() {
@@ -31,9 +32,11 @@ public class Clase {
         return horario;
     }
 
-    public Entrenador getEntrenadorId() {
-        return entrenadorId;
+    public void setEntrenadorId(int entrenadorId) {
+        this.entrenadorId = entrenadorId;
     }
+
+    
 
     public int getCapacidadMaxima() {
         return capacidadMaxima;
@@ -47,11 +50,14 @@ public class Clase {
         this.horario = horario;
     }
 
-    public void setEntrenadorId(Entrenador entrenadorId) {
-        this.entrenadorId = entrenadorId;
+    
+
+    public void setCapacidadMaxima(int capacidadMaxima) {
+        this.capacidadMaxima = capacidadMaxima;
     }
 
-    public Clase(int id, String tipoClase, LocalDateTime horario, Entrenador entrenadorId, int capacidadMaxima) {
+    
+    public Clase(int id, String tipoClase, LocalDateTime horario, int entrenadorId, int capacidadMaxima) {
         this.id = id;
         this.tipoClase = tipoClase;
         this.horario = horario;
@@ -59,4 +65,9 @@ public class Clase {
         this.capacidadMaxima = capacidadMaxima;
     }
 
+    public int getEntrenadorId() {
+        return entrenadorId;
+    }
+
+   
 }

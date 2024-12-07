@@ -12,6 +12,10 @@ import Utils.UtilDate;
 import Utils.UtilGui;
 import View.View;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -319,23 +323,7 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
-         if (!validateRequired()) {
-            showError("Faltan datos requeridos");
-            return;
-        }
-        clase = new Clase(
-                tipoClase.getText(),
-                horario.getText(),
-                idEntrenador.getText(),
-                capacidad.getText(),
-                idClase.getText()
-        );
-        controller.create(clase);
-
-        changeStateBtns();
-
-
-                                     
+    
     }//GEN-LAST:event_guardarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed
@@ -351,7 +339,38 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     }//GEN-LAST:event_clearActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        // TODO add your handling code here:
+       // Obtener el ID de la clase como String y eliminar espacios
+    String cedula = idClase.getText().trim();
+
+    // Verificar si el campo está vacío
+    if (cedula.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de clase válido.");
+        return;
+    }
+
+    // Convertir el String a int
+    int idClaseInt;
+    try {
+        idClaseInt = Integer.parseInt(cedula);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El ID de clase debe ser un número entero válido.");
+        return;
+    }
+
+    // Llamar al método 'readAll' para obtener todas las clases
+    List<Clase> clases = controller.readAll();
+
+    // Buscar la clase que coincida con el ID ingresado
+    Clase clase = clases.stream()
+            .filter(c -> c.getId() == idClaseInt) // Comparar usando el int
+            .findFirst()
+            .orElse(null);
+
+    // Verificar si la clase fue encontrada
+    if (clase == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró una clase con el ID ingresado.");
+        return;
+    }
     }//GEN-LAST:event_buscarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
@@ -377,7 +396,30 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
-        // TODO add your handling code here:
+     if (clase == null) {
+        showError("No hay ninguna clase cargada actualmente");
+        return;
+    }
+
+    if (!validateRequired()) {
+        showError("Faltan datos requeridos");
+        return;
+    }
+
+    // Obtener el nuevo tipo de clase, entrenador ID, y horario
+    String newTipoClase = tipoClase.getText().trim();  // Tomamos el tipo de clase
+    int newIdEntrenadorInt = Integer.parseInt(idEntrenador.getText().trim());  // Tomamos el ID del entrenador
+    LocalDateTime newHorario = LocalDateTime.parse(horario.getText().trim());  // Convertir el texto a LocalDateTime
+
+    // Actualizar los datos de la clase
+    clase.setTipoClase(newTipoClase);  // Actualizamos el tipo de clase
+    clase.setEntrenadorId(newIdEntrenadorInt);  // Asignamos el ID del entrenador
+    clase.setHorario(newHorario);  // Asignamos el nuevo horario
+
+    // Llamamos al controlador para actualizar la clase
+    controller.update(clase);
+
+    showMessage("Clase actualizada correctamente");
     }//GEN-LAST:event_editarActionPerformed
 
     private void mostrarEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarEntrenadorActionPerformed

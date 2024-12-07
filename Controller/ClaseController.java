@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import View.View;
+import java.util.ArrayList;
 /**
  *
  * @author sofia
@@ -61,24 +62,59 @@ public class ClaseController {
             view.showError("Ocurrió un error al guardar los datos: " + ex.getMessage());
         }
     }
+    
+    public void update(Clase clase) {
+    if (dao == null) {
+        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return;
+    }
 
-    // Método para obtener todas las clases
-    public void readAll() {
-        if (dao == null) {
-            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+    if (clase == null || !validateRequired(clase)) {
+        view.showError("Faltan datos requeridos.");
+        return;
+    }
+
+    try {
+        // Verificar que la clase exista antes de actualizar
+        if (validatePK(clase.getId())) {
+            view.showError("La clase con el ID ingresado no se encuentra registrada.");
             return;
         }
 
-        try {
-            List<ClaseDTO> dtoList = dao.readAll();
-            List<Clase> claseList = dtoList.stream()
-                    .map(mapper::toEntity)
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-            view.showAll(claseList); // Muestra las clases en la vista
-        } catch (SQLException ex) {
-            view.showError("Error al cargar los datos: " + ex.getMessage());
-        }
+        // Actualizar la clase en la base de datos
+        dao.update(mapper.toDto(clase));
+        view.showMessage("Clase actualizada correctamente.");
+    } catch (SQLException ex) {
+        view.showError("Ocurrió un error al actualizar los datos: " + ex.getMessage());
+    }
+}
+
+    // Método para obtener todas las clases
+    public List<Clase> readAll() {
+       if (dao == null) {
+        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return new ArrayList<>(); // Devolver lista vacía si no hay acceso a la base de datos
+    }
+
+    try {
+        List<ClaseDTO> dtoList = dao.readAll();
+        
+ 
+        List<Clase> claseList = dtoList.stream()
+                .map(mapper::toEntity)
+                .filter(Objects::nonNull) // Filtrar cualquier entidad nula
+                .collect(Collectors.toList());
+
+        // Mostrar todas las clases en la vista
+        view.showAll(claseList);
+        
+        // Retornar la lista de clases
+        return claseList;
+
+    } catch (SQLException ex) {
+        view.showError("Error al cargar los datos: " + ex.getMessage());
+        return new ArrayList<>();
+    }
     }
 
     // Método para obtener una clase por ID
