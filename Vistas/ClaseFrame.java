@@ -5,12 +5,16 @@
 package Vistas;
 
 import Controller.ClaseController;
+import Controller.EntrenadorController;
 import Model.Clases.Clase;
+import Model.Entrenadores.Entrenador;
 import Utils.UtilDate;
 import Utils.UtilGui;
 import View.View;
 import java.sql.Timestamp;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +23,7 @@ import java.util.List;
 public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase> {
     Clase clase;
     ClaseController controller;
+    EntrenadorController controllerE;
     
     /**
      * Creates new form ClientesFrame
@@ -57,7 +62,7 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
         salida = new javax.swing.JButton();
         clear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        infoEntrenadores = new javax.swing.JTable();
         mostrarEntrenador = new javax.swing.JButton();
 
         setClosable(true);
@@ -212,7 +217,7 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        infoEntrenadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -220,11 +225,16 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
                 "ID", "Nombre", "Contacto", "Especialidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(infoEntrenadores);
 
         mostrarEntrenador.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         mostrarEntrenador.setForeground(new java.awt.Color(0, 0, 0));
         mostrarEntrenador.setText("Presiona para mostrar informacion de los entrenadores");
+        mostrarEntrenador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarEntrenadorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -344,11 +354,53 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
+        
+        if (clase == null) {
+            showError("No hay ningún cliente cargado actualmente");
+            return;
+        }
+
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro que desea eliminar la clase actual?",
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (option == JOptionPane.NO_OPTION) {
+            return;
+        }
+        controller.delete(clase.getId());
+        clear();
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_editarActionPerformed
+
+    private void mostrarEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarEntrenadorActionPerformed
+        // TODO add your handling code here:
+            // Llamar al controlador para obtener los entrenadores
+    List<Entrenador> entrenadores = controllerE.readAll();
+
+    // Obtener el modelo de la tabla infoEntrenadores
+    DefaultTableModel model = (DefaultTableModel) infoEntrenadores.getModel();
+
+    // Limpiar la tabla antes de agregar nuevos datos
+    model.setRowCount(0);
+
+    // Llenar la tabla con los datos de los entrenadores
+    for (Entrenador entrenador : entrenadores) {
+        // Agregar cada fila de datos en la tabla
+        Object[] rowData = {
+            entrenador.getId(),         // ID del entrenador
+            entrenador.getNombre(),     // Nombre del entrenador
+            entrenador.getContacto(),   // Contacto del entrenador
+            entrenador.getEspecialidades()// Especialidad del entrenador
+        };
+        model.addRow(rowData);  // Añadir fila a la tabla
+    }
+    }//GEN-LAST:event_mostrarEntrenadorActionPerformed
 @Override
     public void show(Clase ent) {
          clase = ent;
@@ -370,17 +422,17 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
 
     @Override
     public void showMessage(String msg) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void showError(String err) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JOptionPane.showMessageDialog(this, err, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
     public boolean validateRequired() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       return UtilGui.validateFields(tipoClase, horario, idEntrenador, capacidad, idClase);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -394,6 +446,7 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     private javax.swing.JTextField horario;
     private javax.swing.JTextField idClase;
     private javax.swing.JTextField idEntrenador;
+    private javax.swing.JTable infoEntrenadores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -403,7 +456,6 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton mostrarEntrenador;
     private javax.swing.JButton salida;
     private javax.swing.JTextField tipoClase;

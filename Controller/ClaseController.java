@@ -101,6 +101,30 @@ public class ClaseController {
             view.showError("Error al cargar la clase: " + ex.getMessage());
         }
     }
+    
+    
+    public void delete(int id) {
+    if (dao == null) {
+        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+        return;
+    }
+
+    if (id <= 0) {
+        view.showError("Debe proporcionar un ID válido.");
+        return;
+    }
+
+    try {
+        if (validatePK(id)) {
+            view.showError("El ID ingresado no se encuentra registrado.");
+            return;
+        }
+        dao.delete(id);
+        view.showMessage("Clase eliminada correctamente.");
+    } catch (SQLException ex) {
+        view.showError("Ocurrió un error al eliminar los datos: " + ex.getMessage());
+    }
+}
 
     // Método para validar los datos requeridos
     private boolean validateRequired(Clase clase) {

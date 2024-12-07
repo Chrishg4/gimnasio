@@ -29,7 +29,7 @@ public class ClaseDAO extends DaoCRUD<ClaseDTO> {
         stmt.setString(2, dto.getTipoClase());
         stmt.setTimestamp(3, Timestamp.valueOf(dto.getHorario()));
         stmt.setInt(4, dto.getEntrenadorId());
-        stmt.setInt(4, dto.getCapacidadMaxima());
+        stmt.setInt(5, dto.getCapacidadMaxima());
         return stmt.executeUpdate() > 0;
     }
 
