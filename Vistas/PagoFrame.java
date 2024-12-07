@@ -56,7 +56,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
         guardar = new javax.swing.JButton();
         buscar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
-        editar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         salida = new javax.swing.JButton();
         clear = new javax.swing.JButton();
@@ -190,13 +189,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
             }
         });
 
-        editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Edit.png"))); // NOI18N
-        editar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editarActionPerformed(evt);
-            }
-        });
-
         cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cancel.png"))); // NOI18N
         cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,7 +221,7 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(116, 116, 116)
                 .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,8 +229,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
                 .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(salida, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -257,7 +247,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
                     .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salida, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -280,7 +269,7 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
     }
      
       public void changeStateBtns() {
-        UtilGui.changeStateButtons(guardar,eliminar,buscar,editar);
+        UtilGui.changeStateButtons(guardar,eliminar,buscar);
     }
     
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
@@ -289,10 +278,10 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
             showError("Faltan datos requeridos");
             return;
         }
-         int idValue = Integer.parseInt(idCliente.getText());
+         int idValue = Integer.parseInt(idFactura.getText());
         pago=new Pago(
                 idValue,
-                idFactura.getText(),
+                idCliente.getText(),
                 UtilDate.toLocalDate(fecha.getText()),
                 impuesto.getText(),
                 subtotal.getText(),
@@ -380,11 +369,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
         
     }//GEN-LAST:event_buscarActionPerformed
 
-    private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_editarActionPerformed
-
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         // TODO add your handling code here:
          show(pago);
@@ -407,7 +391,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
     private javax.swing.JButton buscar;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton clear;
-    private javax.swing.JButton editar;
     private javax.swing.JButton eliminar;
     private javax.swing.JTextField fecha;
     private javax.swing.JButton guardar;

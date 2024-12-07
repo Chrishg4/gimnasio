@@ -34,7 +34,7 @@
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
               <Component id="guardar" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="eliminar" min="-2" pref="56" max="-2" attributes="0"/>
@@ -42,8 +42,6 @@
               <Component id="buscar" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="cancelar" min="-2" pref="56" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="editar" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="salida" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -64,7 +62,6 @@
                   <Component id="guardar" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="buscar" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="eliminar" min="-2" pref="56" max="-2" attributes="0"/>
-                  <Component id="editar" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="cancelar" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="salida" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="clear" min="-2" pref="57" max="-2" attributes="0"/>
@@ -294,16 +291,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="editar">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Imagenes/Edit.png"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cancelar">

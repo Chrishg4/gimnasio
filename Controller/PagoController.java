@@ -104,7 +104,6 @@ public class PagoController {
             view.showError("Ocurrió un error al eliminar el pago: " + ex.getMessage());
         }
     }
-
     private boolean validateRequired(Pago pago) {
                 return pago != null
                 && pago.getFecha() != null
