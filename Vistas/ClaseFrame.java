@@ -30,6 +30,8 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
      */
     public ClaseFrame() {
         initComponents();
+        controller= new ClaseController(this);
+        controllerE = new EntrenadorController(this);
     }
 
     /**
