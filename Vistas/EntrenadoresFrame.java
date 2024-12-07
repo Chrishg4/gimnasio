@@ -29,7 +29,7 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
     }
 
     private void clear() {
-        UtilGui.clearTxts(
+        UtilGui.clearTxts(id,
                 nombre,
                 contacto,
                 especialidad
@@ -37,7 +37,7 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
     }
 
     public void changeStateBtns() {
-        UtilGui.changeStateButtons(guardar, eliminar, buscar, editar, salida, clear);
+        UtilGui.changeStateButtons( eliminar, buscar, editar, salida, clear);
     }
 
     /**
@@ -58,6 +58,8 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
         jLabel4 = new javax.swing.JLabel();
         especialidad = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        id = new javax.swing.JTextField();
         guardar = new javax.swing.JButton();
         buscar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
@@ -98,54 +100,68 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel3.setText("Especialidades");
 
+        contacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactoActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel4.setText("Contacto");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel2.setText("Nombre");
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel5.setText("ID");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                                .addGap(72, 72, 72))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(nombre)
-                                .addGap(37, 37, 37)))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(id, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(especialidad, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Save.png"))); // NOI18N
@@ -239,13 +255,13 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
                     .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salida, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
+
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
 
@@ -254,9 +270,7 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
             return;
         }
         try {
-         
-            int idValue = controller.generarId(); 
-
+            int idValue = Integer.parseInt(id.getText());
             entrenador = new Entrenador(
                     idValue,
                     nombre.getText(),
@@ -295,38 +309,65 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        // TODO add your handling code here:
-        // Obtener la cédula (ID) desde el campo de texto "id"
-        String nombreBuscado = nombre.getText().trim();
+//        String idBuscado = id.getText().trim();
+//
+//        if (idBuscado.isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
+//            return;
+//        }
+//
+//        List<Entrenador> entrenadores = controller.readAll();
+//
+//         entrenador = entrenadores.stream()
+//                .filter(c -> c.getNombre().equals(idBuscado))
+//                .findFirst()
+//                .orElse(null);
+//
+//        if (entrenador == null) {
+//            JOptionPane.showMessageDialog(this, "No se encontró un entrenador con el ID ingresada.");
+//            return;
+//        }
+//
+//        nombre.setText(entrenador.getNombre());
+//        contacto.setText(entrenador.getContacto());
+//        especialidad.setText(entrenador.getEspecialidades());
+//
+//        changeStateBtns(); // Cambiar el estado de los botones si es necesario
+        // Obtener el ID buscado desde el campo de texto
+        String idBuscado = id.getText().trim();  // Asegúrate de que 'id' es el campo de texto del ID
 
-        if (nombreBuscado.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
+        // Validar si el ID está vacío
+        if (idBuscado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.");
             return;
         }
 
-        // Llamar al método 'readAll' para obtener todos los entrenadores
-        List<Entrenador> entrenadores = controller.readAll();
+        try {
+            // Convertir el ID buscado a entero
+            int idIntBuscado = Integer.parseInt(idBuscado);
 
-        // Buscar el entrenador que coincida con la cédula ingresada
-        Entrenador entrenador = entrenadores.stream()
-                .filter(e -> e.getNombre().equalsIgnoreCase(nombreBuscado))
-                .findFirst()
-                .orElse(null);
+            // Buscar el entrenador en la lista por ID
+            List<Entrenador> entrenadores = controller.readAll();
 
-        // Verificar si el entrenador fue encontrado
-        if (entrenador == null) {
-            JOptionPane.showMessageDialog(this, "No se encontró un entrenador con la cédula ingresada.");
-            return;
+            entrenador = entrenadores.stream()
+                    .filter(c -> c.getId() == idIntBuscado) // Filtrar por ID
+                    .findFirst()
+                    .orElse(null);
+
+            if (entrenador == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró un entrenador con el ID ingresado.");
+                return;
+            }
+
+            // Si el entrenador se encuentra, actualizar los campos
+            nombre.setText(entrenador.getNombre());
+            contacto.setText(entrenador.getContacto());
+            especialidad.setText(entrenador.getEspecialidades());
+
+            changeStateBtns();  // Cambiar el estado de los botones si es necesario
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido para el ID.");
         }
-
-        // Mostrar los datos del entrenador encontrado directamente en los textfields
-        this.entrenador = entrenador;
-
-        nombre.setText(entrenador.getNombre());
-        contacto.setText(entrenador.getContacto());
-        especialidad.setText(entrenador.getEspecialidades());
-
-        changeStateBtns(); // Cambiar el estado de los botones si es necesario
 
     }//GEN-LAST:event_buscarActionPerformed
 
@@ -337,29 +378,23 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
-        // TODO add your handling code here:
-        // Verificar si hay un entrenador cargado
         if (entrenador == null) {
             showError("No hay ningún entrenador cargado actualmente");
             return;
         }
 
-        // Validar los datos requeridos
         if (!validateRequired()) {
             showError("Faltan datos requeridos");
             return;
         }
 
-        // Obtener los nuevos valores de contacto y especialidad
         String newContacto = contacto.getText().trim();
         String newEspecialidad = especialidad.getText().trim();
 
-        // Verificar si hay cambios en los datos
         if (!newContacto.equals(entrenador.getContacto()) || !newEspecialidad.equals(entrenador.getEspecialidades())) {
             entrenador.setContacto(newContacto);
             entrenador.setEspecialidades(newEspecialidad);
 
-            // Actualizar el entrenador en la base de datos
             controller.update(entrenador);
             showMessage("Datos actualizados correctamente");
         } else {
@@ -378,6 +413,10 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
         changeStateBtns();
     }//GEN-LAST:event_clearActionPerformed
 
+    private void contactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar;
@@ -388,9 +427,11 @@ public class EntrenadoresFrame extends javax.swing.JInternalFrame implements Vie
     private javax.swing.JButton eliminar;
     private javax.swing.JTextField especialidad;
     private javax.swing.JButton guardar;
+    private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

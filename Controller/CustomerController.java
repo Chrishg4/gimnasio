@@ -63,39 +63,39 @@ public class CustomerController {
 
     public void read(String cedula) {
         if (dao == null || cedula == null || cedula.trim().isEmpty()) {
-        view.showError("Debe proporcionar una cédula válida.");
-        return;
-    }
-
-    try {
-        CustomerDTO dto = dao.read(cedula);
-        if (dto == null) {
-            view.showError("No se encontró un cliente con la cédula ingresada.");
+            view.showError("Debe proporcionar una cédula válida.");
             return;
         }
-        Customer customer = mapper.toEntity(dto);
-        view.show(customer); // Muestra los datos del cliente en la vista para su edición
-    } catch (SQLException ex) {
-        view.showError("Ocurrió un error al cargar los datos: " + ex.getMessage());
-    }
+
+        try {
+            CustomerDTO dto = dao.read(cedula);
+            if (dto == null) {
+                view.showError("No se encontró un cliente con la cédula ingresada.");
+                return;
+            }
+            Customer customer = mapper.toEntity(dto);
+            view.show(customer); // Muestra los datos del cliente en la vista para su edición
+        } catch (SQLException ex) {
+            view.showError("Ocurrió un error al cargar los datos: " + ex.getMessage());
+        }
     }
 
-    public List<Customer>  readAll() {
+    public List<Customer> readAll() {
         if (dao == null) {
-        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-        return new ArrayList<>(); // Retorna una lista vacía en caso de error
-    }
+            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+            return new ArrayList<>(); // Retorna una lista vacía en caso de error
+        }
 
-    try {
-        List<CustomerDTO> dtoList = dao.readAll();  // Obtiene todos los clientes desde la base de datos
-        return dtoList.stream()
-                .map(mapper::toEntity)  // Convierte cada DTO a entidad
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    } catch (SQLException ex) {
-        view.showError("Error al cargar los datos: " + ex.getMessage());
-        return new ArrayList<>(); // Retorna una lista vacía en caso de excepción
-    }
+        try {
+            List<CustomerDTO> dtoList = dao.readAll();  // Obtiene todos los clientes desde la base de datos
+            return dtoList.stream()
+                    .map(mapper::toEntity) // Convierte cada DTO a entidad
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        } catch (SQLException ex) {
+            view.showError("Error al cargar los datos: " + ex.getMessage());
+            return new ArrayList<>(); // Retorna una lista vacía en caso de excepción
+        }
     }
 
     public void update(Customer customer) {

@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 /**
  *
  * @author sofia
@@ -27,12 +26,7 @@ public class EntrenadorController {
     private final View view;
     private final EntrenadorMapper mapper;
 
-    private int contadorId = 1;
 
-    public int generarId() {
-        return contadorId++;
-    }
-    
     public EntrenadorController(View view) {
         this.view = view;
         this.mapper = new EntrenadorMapper();
@@ -72,63 +66,55 @@ public class EntrenadorController {
 
     // Método para obtener todos los entrenadores
     public List<Entrenador> readAll() {
-       if (dao == null) {
-        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-        return Collections.emptyList(); // Retorna una lista vacía si hay un error
+        if (dao == null) {
+            view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
+            return Collections.emptyList(); // Retorna una lista vacía si hay un error
+        }
+
+        try {
+            List<EntrenadorDTO> dtoList = dao.readAll();
+            return dtoList.stream()
+                    .map(mapper::toEntity)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        } catch (SQLException ex) {
+            view.showError("Error al cargar los datos: " + ex.getMessage());
+            return Collections.emptyList(); // Retorna una lista vacía si ocurre una excepción
+        }
     }
 
-    try {
-        List<EntrenadorDTO> dtoList = dao.readAll();
-        return dtoList.stream()
-                .map(mapper::toEntity)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    } catch (SQLException ex) {
-        view.showError("Error al cargar los datos: " + ex.getMessage());
-        return Collections.emptyList(); // Retorna una lista vacía si ocurre una excepción
-    }
-    }
-
-    // Método para obtener un entrenador por ID
     public void read(int id) {
        if (dao == null) {
-        view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
-        return;
-    }
-
-    try {
-        EntrenadorDTO dto = dao.read(id);
-        if (dto != null) {
-            Entrenador entrenador = mapper.toEntity(dto);
-            view.show(entrenador); // Usamos el método show de la interfaz View
-        } else {
-            view.showError("No se encontró el entrenador con ID: " + id);
-        }
-    } catch (SQLException ex) {
-        view.showError("Error al cargar el entrenador: " + ex.getMessage());
-    }
-    }
-
-    // Método para actualizar un entrenador
-    public void update(Entrenador entrenador) {
-        if (dao == null) {
             view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
             return;
         }
 
-        if (entrenador == null || !validateRequired(entrenador)) {
+        try {
+            EntrenadorDTO dto = dao.read(id);
+        if (dto != null) {
+            Entrenador entrenador = mapper.toEntity(dto);
+            view.show(entrenador);
+        } else {
+            view.showError("No se encontró el entrenador con ID: " + id);
+            }
+        } catch (SQLException ex) {
+            view.showError("Error al cargar el entrenador: " + ex.getMessage());
+        }
+    }
+
+    // Método para actualizar un entrenador
+    public void update(Entrenador entrenador) {
+        if (dao == null || entrenador == null || !validateRequired(entrenador)) {
             view.showError("Faltan datos requeridos");
             return;
         }
 
         try {
-            // Actualizar entrenador en la base de datos
-            boolean updated = dao.update(mapper.toDto(entrenador));
-            if (updated) {
-                view.showMessage("Entrenador actualizado correctamente");
-            } else {
-                view.showError("No se pudo actualizar el entrenador");
+            if (validatePK(entrenador.getId())) {
+                view.showError("El ID ingresado no se encuentra registrado");
+                return;
             }
+            dao.update(mapper.toDto(entrenador));
         } catch (SQLException ex) {
             view.showError("Ocurrió un error al actualizar los datos: " + ex.getMessage());
         }

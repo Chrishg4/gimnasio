@@ -26,7 +26,7 @@ public class EntrenadorMapper implements Mapper<Entrenador, EntrenadorDTO> {
     public Entrenador toEntity(EntrenadorDTO dto) {
         if(dto == null) return null;
                  return new Entrenador(
-                0,
+                dto.getId(),
                 dto.getNombre(),
                 dto.getContacto(),
                 dto.getEspecialidades()

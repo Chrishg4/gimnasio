@@ -24,26 +24,14 @@ public class EntrenadorDAO extends DaoCRUD<EntrenadorDTO> {
 
     @Override
     public boolean create(EntrenadorDTO dto) throws SQLException {
-        stmt = connection.prepareStatement("call CouchCreate(?,?,?)", Statement.RETURN_GENERATED_KEYS);
-        stmt.setString(1, dto.getNombre());
-        stmt.setString(2, dto.getContacto());
-        stmt.setString(3, dto.getEspecialidades());
+        stmt = connection.prepareStatement("call CouchCreate(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        stmt.setInt(1, dto.getId());
+        stmt.setString(2, dto.getNombre());
+        stmt.setString(3, dto.getContacto());
+        stmt.setString(4, dto.getEspecialidades());
         //Verifica si agrega a la bd los datos
-        int rowsAffected = stmt.executeUpdate();
+        return stmt.executeUpdate() > 0;
 
-    // Si la inserción fue exitosa, obtenemos el ID generado
-    if (rowsAffected > 0) {
-        try (ResultSet rs = stmt.getGeneratedKeys()) {
-            if (rs.next()) {
-                // Asumiendo que el ID generado es el primer valor
-                int generatedId = rs.getInt(1);
-                dto.setId(generatedId);  // Puedes asignar el ID generado al DTO si lo necesitas
-            }
-        }
-        return true;
-    }
-
-    return false;
 }
 
     @Override
