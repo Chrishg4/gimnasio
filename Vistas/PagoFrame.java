@@ -5,10 +5,12 @@
 package Vistas;
 
 import Controller.PagoController;
+import Model.Customer.Customer;
 import Model.Pago.Pago;
 import Utils.UtilDate;
 import Utils.UtilGui;
 import View.View;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -287,8 +289,9 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
             showError("Faltan datos requeridos");
             return;
         }
+         int idValue = Integer.parseInt(idCliente.getText());
         pago=new Pago(
-                idCliente.getText(),
+                idValue,
                 idFactura.getText(),
                 UtilDate.toLocalDate(fecha.getText()),
                 impuesto.getText(),
@@ -322,7 +325,58 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:gg
+         try {
+        // Validar y obtener datos del cliente
+        String cedula = idCliente.getText().trim();
+        if (cedula.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese la cédula del cliente.");
+            return;
+        }
+
+        // Validar y obtener el subtotal
+        String subtotalText = subtotal.getText().trim();
+        if (subtotalText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese el subtotal.");
+            return;
+        }
+        double subtotal = Double.parseDouble(subtotalText);
+
+        // Validar y obtener el impuesto
+        String impuestoText = impuesto.getText().trim();
+        if (impuestoText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese el impuesto.");
+            return;
+        }
+        double impuesto = Double.parseDouble(impuestoText);
+
+        // Validar valores no negativos
+        if (subtotal < 0 || impuesto < 0) {
+            JOptionPane.showMessageDialog(this, "Los valores de subtotal e impuesto deben ser positivos.");
+            return;
+        }
+
+        // Calcular el total
+        double total = subtotal + impuesto;
+
+        // Crear el objeto Customer asociado al pago
+        Customer customer = new Customer(cedula, "Nombre Cliente", new Date(), "Contacto", "Membresía");
+
+        // Crear el objeto Pago
+        Pago pago = new Pago(0, customer, new Date(), subtotal, impuesto, total);
+
+        // Llamar al controlador para guardar
+        controller.create(pago);
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Pago guardado correctamente.");
+
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos para el subtotal e impuesto.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al guardar el pago: " + ex.getMessage());
+    }
         
     }//GEN-LAST:event_buscarActionPerformed
 
