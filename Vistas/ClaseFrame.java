@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,6 +37,7 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
         initComponents();
         controller= new ClaseController(this);
         controllerE = new EntrenadorController(this);
+         tipoClase = new JTextField();
     }
 
     /**
@@ -322,8 +324,43 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        // TODO add your handling code here:
-    
+     // Validar si tipoClase está inicializado y no es nulo
+    if (tipoClase == null) {
+        showError("El campo tipoClase no ha sido inicializado correctamente.");
+        return;
+    }
+
+    // Obtener el texto y validar si está vacío
+    String tipoClaseStr = tipoClase.getText().trim();
+    if (tipoClaseStr.isEmpty()) {
+        showError("Por favor, ingresa el tipo de clase.");
+        return;
+    }
+
+
+    // Parse idEntrenador to an integer
+    int idEntrenadorInt;
+    try {
+        idEntrenadorInt = Integer.parseInt(idEntrenador.getText().trim());
+    } catch (NumberFormatException e) {
+        showError("El ID del entrenador debe ser un número entero válido.");
+        return;
+    }
+
+    // Create a new Clase object
+    Clase clase = new Clase(
+        tipoClaseStr, // Use the validated tipoClaseStr
+        horario.getText(),
+        idEntrenadorInt,
+        capacidad.getText(),
+        idClase.getText()
+    );
+
+    // Create the clase using the controller
+    controller.create(clase);
+
+    // Change button states
+    changeStateBtns();
     }//GEN-LAST:event_guardarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed
