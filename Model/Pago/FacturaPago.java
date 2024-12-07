@@ -48,7 +48,7 @@ public class FacturaPago {
             ids.add(line);
             ids.add(Chunk.NEWLINE);
             ids.add(new Chunk("ID Cliente: ", subTituloFont));
-            ids.add(new Chunk(String.valueOf((Integer)pago.getCustomer().getId()), textoFont));
+            ids.add(new Chunk(pago.getCustomer().getCedula()), textoFont);
             ids.setSpacingAfter(10);
             document.add(ids);
 

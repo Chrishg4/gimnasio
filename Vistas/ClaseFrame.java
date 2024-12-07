@@ -26,18 +26,19 @@ import javax.swing.table.DefaultTableModel;
  * @author chris
  */
 public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase> {
+
     Clase clase;
     ClaseController controller;
     EntrenadorController controllerE;
-    
+
     /**
      * Creates new form ClientesFrame
      */
     public ClaseFrame() {
         initComponents();
-        controller= new ClaseController(this);
+        controller = new ClaseController(this);
         controllerE = new EntrenadorController(this);
-         tipoClase = new JTextField();
+        tipoClase = new JTextField();
     }
 
     /**
@@ -314,7 +315,8 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
                 idClase
         );
     }
- public void changeStateBtns() {
+
+    public void changeStateBtns() {
         UtilGui.changeStateButtons(guardar, eliminar, buscar, editar, salida, clear);
     }
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -324,43 +326,42 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-     // Validar si tipoClase está inicializado y no es nulo
-    if (tipoClase == null) {
-        showError("El campo tipoClase no ha sido inicializado correctamente.");
-        return;
-    }
+        // Validar si tipoClase está inicializado y no es nulo
+        if (tipoClase == null) {
+            showError("El campo tipoClase no ha sido inicializado correctamente.");
+            return;
+        }
 
-    // Obtener el texto y validar si está vacío
-    String tipoClaseStr = tipoClase.getText().trim();
-    if (tipoClaseStr.isEmpty()) {
-        showError("Por favor, ingresa el tipo de clase.");
-        return;
-    }
+        // Obtener el texto y validar si está vacío
+        String tipoClaseStr = tipoClase.getText().trim();
+        if (tipoClaseStr.isEmpty()) {
+            showError("Por favor, ingresa el tipo de clase.");
+            return;
+        }
 
+        // Parse idEntrenador to an integer
+        int idEntrenadorInt;
+        try {
+            idEntrenadorInt = Integer.parseInt(idEntrenador.getText().trim());
+        } catch (NumberFormatException e) {
+            showError("El ID del entrenador debe ser un número entero válido.");
+            return;
+        }
 
-    // Parse idEntrenador to an integer
-    int idEntrenadorInt;
-    try {
-        idEntrenadorInt = Integer.parseInt(idEntrenador.getText().trim());
-    } catch (NumberFormatException e) {
-        showError("El ID del entrenador debe ser un número entero válido.");
-        return;
-    }
+        // Create a new Clase object
+        Clase clase = new Clase(
+                tipoClaseStr, 
+                horario.getText(),
+                idEntrenadorInt,
+                capacidad.getText(),
+                idClase.getText()
+        );
 
-    // Create a new Clase object
-    Clase clase = new Clase(
-        tipoClaseStr, // Use the validated tipoClaseStr
-        horario.getText(),
-        idEntrenadorInt,
-        capacidad.getText(),
-        idClase.getText()
-    );
+        // Create the clase using the controller
+        controller.create(clase);
 
-    // Create the clase using the controller
-    controller.create(clase);
-
-    // Change button states
-    changeStateBtns();
+        // Change button states
+        changeStateBtns();
     }//GEN-LAST:event_guardarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed
@@ -376,43 +377,43 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     }//GEN-LAST:event_clearActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-       // Obtener el ID de la clase como String y eliminar espacios
-    String cedula = idClase.getText().trim();
+        // Obtener el ID de la clase como String y eliminar espacios
+        String cedula = idClase.getText().trim();
 
-    // Verificar si el campo está vacío
-    if (cedula.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de clase válido.");
-        return;
-    }
+        // Verificar si el campo está vacío
+        if (cedula.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID de clase válido.");
+            return;
+        }
 
-    // Convertir el String a int
-    int idClaseInt;
-    try {
-        idClaseInt = Integer.parseInt(cedula);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El ID de clase debe ser un número entero válido.");
-        return;
-    }
+        // Convertir el String a int
+        int idClaseInt;
+        try {
+            idClaseInt = Integer.parseInt(cedula);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El ID de clase debe ser un número entero válido.");
+            return;
+        }
 
-    // Llamar al método 'readAll' para obtener todas las clases
-    List<Clase> clases = controller.readAll();
+        // Llamar al método 'readAll' para obtener todas las clases
+        List<Clase> clases = controller.readAll();
 
-    // Buscar la clase que coincida con el ID ingresado
-    Clase clase = clases.stream()
-            .filter(c -> c.getId() == idClaseInt) // Comparar usando el int
-            .findFirst()
-            .orElse(null);
+        // Buscar la clase que coincida con el ID ingresado
+        Clase clase = clases.stream()
+                .filter(c -> c.getId() == idClaseInt) // Comparar usando el int
+                .findFirst()
+                .orElse(null);
 
-    // Verificar si la clase fue encontrada
-    if (clase == null) {
-        JOptionPane.showMessageDialog(this, "No se encontró una clase con el ID ingresado.");
-        return;
-    }
+        // Verificar si la clase fue encontrada
+        if (clase == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró una clase con el ID ingresado.");
+            return;
+        }
     }//GEN-LAST:event_buscarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
-        
+
         if (clase == null) {
             showError("No hay ningún cliente cargado actualmente");
             return;
@@ -433,58 +434,58 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarActionPerformed
-     if (clase == null) {
-        showError("No hay ninguna clase cargada actualmente");
-        return;
-    }
+        if (clase == null) {
+            showError("No hay ninguna clase cargada actualmente");
+            return;
+        }
 
-    if (!validateRequired()) {
-        showError("Faltan datos requeridos");
-        return;
-    }
+        if (!validateRequired()) {
+            showError("Faltan datos requeridos");
+            return;
+        }
 
-    // Obtener el nuevo tipo de clase, entrenador ID, y horario
-    String newTipoClase = tipoClase.getText().trim();  // Tomamos el tipo de clase
-    int newIdEntrenadorInt = Integer.parseInt(idEntrenador.getText().trim());  // Tomamos el ID del entrenador
-    LocalDateTime newHorario = LocalDateTime.parse(horario.getText().trim());  // Convertir el texto a LocalDateTime
+        // Obtener el nuevo tipo de clase, entrenador ID, y horario
+        String newTipoClase = tipoClase.getText().trim();  // Tomamos el tipo de clase
+        int newIdEntrenadorInt = Integer.parseInt(idEntrenador.getText().trim());  // Tomamos el ID del entrenador
+        LocalDateTime newHorario = LocalDateTime.parse(horario.getText().trim());  // Convertir el texto a LocalDateTime
 
-    // Actualizar los datos de la clase
-    clase.setTipoClase(newTipoClase);  // Actualizamos el tipo de clase
-    clase.setEntrenadorId(newIdEntrenadorInt);  // Asignamos el ID del entrenador
-    clase.setHorario(newHorario);  // Asignamos el nuevo horario
+        // Actualizar los datos de la clase
+        clase.setTipoClase(newTipoClase);  // Actualizamos el tipo de clase
+        clase.setEntrenadorId(newIdEntrenadorInt);  // Asignamos el ID del entrenador
+        clase.setHorario(newHorario);  // Asignamos el nuevo horario
 
-    // Llamamos al controlador para actualizar la clase
-    controller.update(clase);
+        // Llamamos al controlador para actualizar la clase
+        controller.update(clase);
 
-    showMessage("Clase actualizada correctamente");
+        showMessage("Clase actualizada correctamente");
     }//GEN-LAST:event_editarActionPerformed
 
     private void mostrarEntrenadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarEntrenadorActionPerformed
         // TODO add your handling code here:
-            // Llamar al controlador para obtener los entrenadores
-    List<Entrenador> entrenadores = controllerE.readAll();
+        // Llamar al controlador para obtener los entrenadores
+        List<Entrenador> entrenadores = controllerE.readAll();
 
-    // Obtener el modelo de la tabla infoEntrenadores
-    DefaultTableModel model = (DefaultTableModel) infoEntrenadores.getModel();
+        // Obtener el modelo de la tabla infoEntrenadores
+        DefaultTableModel model = (DefaultTableModel) infoEntrenadores.getModel();
 
-    // Limpiar la tabla antes de agregar nuevos datos
-    model.setRowCount(0);
+        // Limpiar la tabla antes de agregar nuevos datos
+        model.setRowCount(0);
 
-    // Llenar la tabla con los datos de los entrenadores
-    for (Entrenador entrenador : entrenadores) {
-        // Agregar cada fila de datos en la tabla
-        Object[] rowData = {
-            entrenador.getId(),         // ID del entrenador
-            entrenador.getNombre(),     // Nombre del entrenador
-            entrenador.getContacto(),   // Contacto del entrenador
-            entrenador.getEspecialidades()// Especialidad del entrenador
-        };
-        model.addRow(rowData);  // Añadir fila a la tabla
-    }
+        // Llenar la tabla con los datos de los entrenadores
+        for (Entrenador entrenador : entrenadores) {
+            // Agregar cada fila de datos en la tabla
+            Object[] rowData = {
+                entrenador.getId(), // ID del entrenador
+                entrenador.getNombre(), // Nombre del entrenador
+                entrenador.getContacto(), // Contacto del entrenador
+                entrenador.getEspecialidades()// Especialidad del entrenador
+            };
+            model.addRow(rowData);  // Añadir fila a la tabla
+        }
     }//GEN-LAST:event_mostrarEntrenadorActionPerformed
-@Override
+    @Override
     public void show(Clase ent) {
-         clase = ent;
+        clase = ent;
         if (ent == null) {
             clear();
             return;
@@ -503,7 +504,7 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
 
     @Override
     public void showMessage(String msg) {
-         JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, msg, "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -513,7 +514,7 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
 
     @Override
     public boolean validateRequired() {
-       return UtilGui.validateFields(tipoClase, horario, idEntrenador, capacidad, idClase);
+        return UtilGui.validateFields(tipoClase, horario, idEntrenador, capacidad, idClase);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -542,5 +543,4 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     private javax.swing.JTextField tipoClase;
     // End of variables declaration//GEN-END:variables
 
-    
 }
