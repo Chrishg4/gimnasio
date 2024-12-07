@@ -348,7 +348,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
         // Calcular el total
         double total = subtotal + impuesto;
 
-        // Crear el objeto Customer asociado al pago
         Customer customer = new Customer(cedula, "Nombre Cliente", new Date(), "Contacto", "Membresía");
 
         // Crear el objeto Pago
@@ -356,8 +355,6 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
 
         // Llamar al controlador para guardar
         controller.create(pago);
-
-        // Mostrar mensaje de éxito
         JOptionPane.showMessageDialog(this, "Pago guardado correctamente.");
 
 
