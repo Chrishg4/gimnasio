@@ -29,7 +29,7 @@ public class ClaseMapper implements Mapper<Clase, ClaseDTO> {
                 ent.getId(),
                 ent.getTipoClase(),
                 ent.getHorario(),
-                ent.getEntrenadorId().getId(),
+                ent.getEntrenadorId(),
                 ent.getCapacidadMaxima());
     }
 
@@ -55,7 +55,7 @@ public class ClaseMapper implements Mapper<Clase, ClaseDTO> {
                     dto.getId(),
                     dto.getTipoClase(),
                     dto.getHorario(),
-                    new EntrenadorMapper().toEntity(entrenador),
+                    dto.getEntrenadorId(),
                     dto.getCapacidadMaxima()
             );
         } catch (SQLException ex) {
