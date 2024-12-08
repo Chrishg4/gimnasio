@@ -22,76 +22,75 @@ import java.io.FileOutputStream;
  * @author pamel
  */
 public class FacturaPago {
-      public static void generarReportePDF(String rutaArchivo, Pago pago) {
+    public static void generarReportePDF(String rutaArchivo, Pago pago) {
         try {
-
-            Document document = new Document(PageSize.A4, 50, 50, 50, 50) {};
+            // Crear el documento
+            Document document = new Document(PageSize.A4, 50, 50, 50, 50);
             PdfWriter.getInstance(document, new FileOutputStream(rutaArchivo));
             document.open();
 
+            // Fuentes para el documento
             Font tituloFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD, BaseColor.BLUE);
             Font subTituloFont = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.DARK_GRAY);
             Font textoFont = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
 
+            // Título
             Paragraph titulo = new Paragraph("Factura del Pago", tituloFont);
             titulo.setAlignment(Element.ALIGN_CENTER);
             titulo.setSpacingAfter(20);
             document.add(titulo);
 
+            // Línea separadora
             LineSeparator line = new LineSeparator();
             document.add(line);
 
+            // ID del pago y cliente
             Paragraph ids = new Paragraph();
             ids.add(new Chunk("ID Pago: ", subTituloFont));
             ids.add(new Chunk(String.valueOf(pago.getIdpago()), textoFont));
             ids.add(Chunk.NEWLINE);
-            ids.add(line);
-            ids.add(Chunk.NEWLINE);
             ids.add(new Chunk("ID Cliente: ", subTituloFont));
-            ids.add(new Chunk(pago.getCustomer().getCedula()), textoFont);
+            ids.add(new Chunk(pago.getCustomer().getCedula(), textoFont));
             ids.setSpacingAfter(10);
             document.add(ids);
 
+            // Otra línea separadora
             document.add(line);
 
+            // Fecha del pago
             Paragraph fecha = new Paragraph();
             fecha.add(new Chunk("Fecha: ", subTituloFont));
             fecha.add(new Chunk(String.valueOf(pago.getFecha()), textoFont));
             fecha.setSpacingAfter(10);
             document.add(fecha);
 
-            document.add(line);
-            
-            Paragraph cantidad = new Paragraph();
-            cantidad.add(new Chunk("Cantidad recolectada: ", subTituloFont));
-            cantidad.add(new Chunk(produccion.getCantidadRecolectada() + " Kg", textoFont));
-            cantidad.setSpacingAfter(10);
-            document.add(cantidad);
+            // Subtotal
+            Paragraph subTotal = new Paragraph();
+            subTotal.add(new Chunk("Subtotal: ", subTituloFont));
+            subTotal.add(new Chunk("₡" + String.format("%.2f", pago.getSubtotal()), textoFont));
+            subTotal.setSpacingAfter(10);
+            document.add(subTotal);
 
-            document.add(line);
+            // Impuesto
+            Paragraph impuesto = new Paragraph();
+            impuesto.add(new Chunk("Impuesto: ", subTituloFont));
+            impuesto.add(new Chunk("₡" + String.format("%.2f", pago.getImpuesto()), textoFont));
+            impuesto.setSpacingAfter(10);
+            document.add(impuesto);
 
-            Paragraph calidad = new Paragraph();
-            calidad.add(new Chunk("Calidad del producto: ", subTituloFont));
-            calidad.add(new Chunk(produccion.getCalidad(), textoFont));
-            calidad.setSpacingAfter(10);
-            document.add(calidad);
+            // Total
+            Paragraph total = new Paragraph();
+            total.add(new Chunk("Total: ", subTituloFont));
+            total.add(new Chunk("₡" + String.format("%.2f", pago.getTotal()), textoFont));
+            total.setSpacingAfter(10);
+            document.add(total);
 
-            document.add(line);
-
-            Paragraph destino = new Paragraph();
-            destino.add(new Chunk("Destino: ", subTituloFont));
-            destino.add(new Chunk(produccion.getDestino(), textoFont));
-            destino.setSpacingAfter(10);
-            document.add(destino);
-            document.add(line);
-
+            // Cerrar documento
             document.close();
 
             System.out.println("Reporte PDF generado exitosamente.");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
 }
