@@ -8,10 +8,12 @@ package Vistas;
 
 import Controller.PagoController;
 import Model.Customer.Customer;
+import Model.Pago.FacturaPago;
 import Model.Pago.Pago;
 import Utils.UtilDate;
 import Utils.UtilGui;
 import View.View;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -213,7 +215,7 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
             }
         });
 
-        generar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pdf.png"))); // NOI18N
+        generar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descargar-pdf.png"))); // NOI18N
         generar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generarActionPerformed(evt);
@@ -398,6 +400,21 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
 
     private void generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarActionPerformed
         // TODO add your handling code here:
+        if (pago == null){
+            showError("No se pudieron obtener los datos de pago");
+            return;
+        }
+
+        String rutaArchivo;
+
+        try {
+            rutaArchivo = "reporteProduccion.pdf";
+            FacturaPago.generarReportePDF(rutaArchivo, pago);
+            JOptionPane.showMessageDialog(this, "Reporte PDF generado en: " + new File(rutaArchivo).getAbsolutePath());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);}
+        
     }//GEN-LAST:event_generarActionPerformed
 
 
