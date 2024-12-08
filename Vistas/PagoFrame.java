@@ -1,3 +1,5 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
@@ -59,6 +61,7 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
         cancelar = new javax.swing.JButton();
         salida = new javax.swing.JButton();
         clear = new javax.swing.JButton();
+        generar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -210,6 +213,13 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
             }
         });
 
+        generar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pdf.png"))); // NOI18N
+        generar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -233,6 +243,8 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
                 .addComponent(salida, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(generar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -249,6 +261,7 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
                     .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salida, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(generar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
@@ -383,6 +396,10 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
         changeStateBtns();
     }//GEN-LAST:event_clearActionPerformed
 
+    private void generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_generarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar;
@@ -390,6 +407,7 @@ public class PagoFrame extends javax.swing.JInternalFrame implements View<Pago>{
     private javax.swing.JButton clear;
     private javax.swing.JButton eliminar;
     private javax.swing.JTextField fecha;
+    private javax.swing.JButton generar;
     private javax.swing.JButton guardar;
     private javax.swing.JTextField idCliente;
     private javax.swing.JTextField idFactura;

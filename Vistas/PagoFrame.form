@@ -46,6 +46,8 @@
               <Component id="salida" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="clear" min="-2" pref="56" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="generar" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -64,6 +66,7 @@
                   <Component id="eliminar" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="cancelar" min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="salida" min="-2" pref="56" max="-2" attributes="0"/>
+                  <Component id="generar" min="-2" pref="57" max="-2" attributes="0"/>
                   <Component id="clear" min="-2" pref="57" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="34" max="32767" attributes="0"/>
@@ -321,6 +324,16 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="generar">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/pdf.png"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
