@@ -4,17 +4,27 @@
  */
 package Vistas;
 
+import Controller.CustomerController;
+import Model.Customer.Customer;
+import View.View;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author chris
  */
-public class SearchCliente extends javax.swing.JInternalFrame {
-
+public class SearchCliente extends javax.swing.JInternalFrame implements View<Customer> {
+    Customer customer;
+    CustomerController controller;
     /**
      * Creates new form SerchCliente
      */
     public SearchCliente() {
         initComponents();
+      //  controller= new CustomerController();
+      controller = new CustomerController(this);
     }
 
     /**
@@ -28,10 +38,10 @@ public class SearchCliente extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        infoCliente = new javax.swing.JTable();
         Buscar = new javax.swing.JButton();
         cerrar = new javax.swing.JButton();
 
@@ -65,7 +75,7 @@ public class SearchCliente extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setText("ID Cliente:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        infoCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -81,7 +91,7 @@ public class SearchCliente extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(infoCliente);
 
         Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Search.png"))); // NOI18N
         Buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +125,7 @@ public class SearchCliente extends javax.swing.JInternalFrame {
                                 .addGap(49, 49, 49)
                                 .addComponent(jLabel2)
                                 .addGap(31, 31, 31)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 6, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -133,7 +143,7 @@ public class SearchCliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -152,18 +162,83 @@ public class SearchCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cerrarActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        // TODO add your handling code here:
+       // Obtener la cédula del cliente ingresada en el campo de texto
+    String cedula = id.getText().trim();
+
+    // Validar que el campo de cédula no esté vacío
+    if (cedula.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula válida.");
+        return;
+    }
+
+    // Llamar al método 'readAll' para obtener todos los clientes
+    List<Customer> customers = controller.readAll();
+
+    // Buscar el cliente que coincida con la cédula ingresada
+    Customer customer = customers.stream()
+            .filter(c -> c.getCedula().equals(cedula))
+            .findFirst()
+            .orElse(null);
+
+    // Verificar si el cliente fue encontrado
+    if (customer == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró un cliente con la cédula ingresada.");
+        return;
+    }
+
+    // Obtener el modelo de la tabla infoClientes
+    DefaultTableModel model = (DefaultTableModel) infoCliente.getModel();
+
+    // Limpiar la tabla antes de agregar nuevos datos
+    model.setRowCount(0);
+
+    // Llenar la tabla con los datos del cliente encontrado
+    Object[] rowData = {
+        customer.getCedula(),                  // ID del cliente
+        customer.getNombre(),              // Nombre del cliente
+        customer.getFechaNacimiento(),     // Fecha de nacimiento del cliente
+        customer.getContacto(),            // Contacto del cliente
+        customer.getTipoMembresia()        // Tipo de membresía del cliente
+    };
+
+    // Añadir la fila a la tabla
+    model.addRow(rowData);
     }//GEN-LAST:event_BuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
     private javax.swing.JButton cerrar;
+    private javax.swing.JTextField id;
+    private javax.swing.JTable infoCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void show(Customer ent) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showAll(List<Customer> ents) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void showError(String err) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean validateRequired() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
