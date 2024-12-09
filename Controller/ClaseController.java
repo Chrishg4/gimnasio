@@ -44,10 +44,10 @@ public class ClaseController {
             return;
         }
 
-        if (clase == null || !validateRequired(clase)) {
-            view.showError("Faltan datos requeridos");
-            return;
-        }
+//        if (clase == null || !validateRequired(clase)) {
+//            view.showError("Faltan datos requeridos");
+//            return;
+//        }
 
         try {
             // Verifica si la clase ya existe (si es necesario)

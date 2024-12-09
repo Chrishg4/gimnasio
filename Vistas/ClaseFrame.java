@@ -330,7 +330,6 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
      // Verificar y mostrar el valor de "horario" para depuración
-    System.out.println("Horario ingresado: " + horario.getText());
     
     try {
         int capacidadInt = Integer.parseInt(capacidad.getText());
