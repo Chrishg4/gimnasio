@@ -37,7 +37,7 @@ public class ClaseController {
         }
     }
 
-    // Método para crear una clase
+    // Método para crear(guardar) una clase
     public void create(Clase clase) {
         if (dao == null) {
             view.showError("El acceso a la base de datos no se ha inicializado correctamente.");
@@ -164,8 +164,18 @@ public class ClaseController {
 
     // Método para validar los datos requeridos
     private boolean validateRequired(Clase clase) {
-        return clase.getId() > 0 && clase.getTipoClase() != null && !clase.getTipoClase().isEmpty()
-                && clase.getHorario() != null && clase.getCapacidadMaxima() > 0;
+        return clase.getId() > 0 && 
+                clase.getTipoClase() != null && 
+                !clase.getTipoClase().isEmpty() && 
+                clase.getHorario() != null && 
+                clase.getCapacidadMaxima() > 0;
+        
+        
+        
+//          return clase.getTipoClase() != null &&
+//           clase.getHorario() != null &&
+//           clase.getEntrenadorId() > 0 &&  // Asegura que el ID del entrenador sea mayor a 0
+//           clase.getCapacidadMaxima() > 0;  // Asegura que la capacidad sea mayor a 0
     }
 
     // Método para verificar si la clase con el ID ya existe

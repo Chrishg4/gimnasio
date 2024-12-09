@@ -18,6 +18,9 @@ import Vistas.MenuAdministrador;
 import Vistas.MenuEntrenador;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -232,11 +235,26 @@ UsuarioController controller;
     private void correoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_correoActionPerformed
-
+public String encriptarContraseña(String password) {
+    try {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : encodedHash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException(e);
+    }
+}
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
     
-
-        // Validar que los campos requeridos no estén vacíos
+ // Validar que los campos requeridos no estén vacíos
     if (id.getText().trim().isEmpty() || 
         nombre.getText().trim().isEmpty() || 
         correo.getText().trim().isEmpty() || 
@@ -247,12 +265,15 @@ UsuarioController controller;
         return;
     }
 
+    // Encriptar la contraseña antes de guardarla
+    String contraseñaEncriptada = encriptarContraseña(contraseña.getText());
+
     // Crear un nuevo usuario con los datos ingresados
     Usuario usuario = new Usuario(
         Integer.parseInt(id.getText()),  // Convertir id a int
         nombre.getText(),
         correo.getText(),
-        contraseña.getText(),
+        contraseñaEncriptada,  // Usar la contraseña encriptada
         Roles.valueOf((String) rol.getSelectedItem())  // Convertir el rol a enum
     );
 
@@ -263,22 +284,17 @@ UsuarioController controller;
 
     // Verificar el rol y mostrar el menú correspondiente
     if (selectedRol.equals("ADMINISTRADOR")) {
-        // Crear una instancia de MenuAdministrador
         MenuAdministrador menuAdmin = new MenuAdministrador();
         menuAdmin.setVisible(true);
     } else if (selectedRol.equals("ENTRENADOR")) {
-        // Crear una instancia de MenuEntrenador
         MenuEntrenador menuEntrenador = new MenuEntrenador();
         menuEntrenador.setVisible(true);
     } else {
-        // Opcional: Manejar otros roles si es necesario
         System.out.println("Rol no reconocido");
     }
 
     // Cerrar la ventana de login si se desea
-    dispose();  // Esto cierra la ventana actual (el Login)
-
-
+    dispose(); 
     }//GEN-LAST:event_loginActionPerformed
 
     private void rolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rolActionPerformed

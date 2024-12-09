@@ -138,16 +138,20 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
                         .addComponent(tipoClase, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(idEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(capacidad, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGap(47, 47, 47)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(idClase, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(169, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(idEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(idClase, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(217, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(capacidad, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +241,6 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
         jScrollPane1.setViewportView(infoEntrenadores);
 
         mostrarEntrenador.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        mostrarEntrenador.setForeground(new java.awt.Color(0, 0, 0));
         mostrarEntrenador.setText("Presiona para mostrar informacion de los entrenadores");
         mostrarEntrenador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -326,42 +329,32 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        // Validar si tipoClase está inicializado y no es nulo
-        if (tipoClase == null) {
-            showError("El campo tipoClase no ha sido inicializado correctamente.");
-            return;
-        }
-
-        // Obtener el texto y validar si está vacío
-        String tipoClaseStr = tipoClase.getText().trim();
-        if (tipoClaseStr.isEmpty()) {
-            showError("Por favor, ingresa el tipo de clase.");
-            return;
-        }
-
-        // Parse idEntrenador to an integer
-        int idEntrenadorInt;
-        try {
-            idEntrenadorInt = Integer.parseInt(idEntrenador.getText().trim());
-        } catch (NumberFormatException e) {
-            showError("El ID del entrenador debe ser un número entero válido.");
-            return;
-        }
-
-        // Create a new Clase object
-        Clase clase = new Clase(
-                tipoClaseStr, 
-                horario.getText(),
-                idEntrenadorInt,
-                capacidad.getText(),
-                idClase.getText()
+     // Verificar y mostrar el valor de "horario" para depuración
+    System.out.println("Horario ingresado: " + horario.getText());
+    
+    try {
+        int capacidadInt = Integer.parseInt(capacidad.getText());
+        int idClaseInt = Integer.parseInt(idClase.getText());
+        
+        // Conversión del campo de texto a LocalDateTime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); // Ajusta el formato según sea necesario
+        LocalDateTime horarioDateTime = LocalDateTime.parse(horario.getText(), formatter);
+        
+        clase = new Clase(
+                idClaseInt,
+                tipoClase.getText(),
+                horarioDateTime,
+                Integer.parseInt(idEntrenador.getText()),  
+                capacidadInt
         );
 
-        // Create the clase using the controller
         controller.create(clase);
-
-        // Change button states
         changeStateBtns();
+    } catch (NumberFormatException ex) {
+        showError("Capacidad, ID de la clase o ID del entrenador no son válidos. Deben ser números enteros.");
+    } catch (DateTimeParseException ex) {
+        showError("El formato del horario no es válido. Debe ser 'yyyy-MM-dd HH:mm'.");
+    }
     }//GEN-LAST:event_guardarActionPerformed
 
     private void salidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidaActionPerformed
@@ -514,7 +507,22 @@ public class ClaseFrame extends javax.swing.JInternalFrame implements View<Clase
 
     @Override
     public boolean validateRequired() {
-        return UtilGui.validateFields(tipoClase, horario, idEntrenador, capacidad, idClase);
+        //return UtilGui.validateFields(tipoClase, horario, idEntrenador, capacidad, idClase);
+        return !tipoClase.getText().trim().isEmpty() &&
+           !horario.getText().trim().isEmpty() &&
+           !idEntrenador.getText().trim().isEmpty() &&
+           !capacidad.getText().trim().isEmpty() &&
+           !idClase.getText().trim().isEmpty();
+        /*
+         if (tipoClase.getText().isEmpty() ||
+        horario.getText().isEmpty() ||
+        idEntrenador.getText().isEmpty() ||
+        capacidad.getText().isEmpty() ||
+        idClase.getText().isEmpty()) {
+        return false;
+    }
+    return true;
+*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
